@@ -1,0 +1,12 @@
+# dir
+app/src/
+app/server/
+config/
+db/
+log/
+node_modules/
+public/
+
+# file
+package-lock.json
+
