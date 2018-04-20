@@ -9,4 +9,9 @@ public/
 
 # file
 package-lock.json
+yarn.lock
+.env
+
+# mac
+.DS_Store
 
