@@ -81,7 +81,7 @@ export class ApplicationLoader {
 
     this._server = Express();
     const settings = ApplicationRegistry.settings;
-
+    console.log(settings);
     this._env = process.env.NODE_ENV || settings.env || 'development';
 
     this._rootDir = settings.rootDir;

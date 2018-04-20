@@ -29,7 +29,7 @@ export class HandlerTransformer {
     this._handlerMetadata = handlerMetadata;
   }
 
-  public async transform() {
+  public transform() {
 
     const isErrorHandler = this.handlerMetadata.isErrorHandler;
 
