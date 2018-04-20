@@ -1,4 +1,4 @@
-import {HandlerMetadata} from "./HandlerMetadata";
+import {HandlerMetadata} from './HandlerMetadata';
 
 export class FilterMetadata {
 

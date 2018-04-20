@@ -1,5 +1,5 @@
-import {Klass} from "../core/Klass";
-import {EventEmitter} from "events";
+import {Klass} from '../core/Klass';
+import {EventEmitter} from 'events';
 
 export class EventListenerMetadata {
 

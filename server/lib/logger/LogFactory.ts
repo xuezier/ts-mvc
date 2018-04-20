@@ -1,4 +1,4 @@
-import * as Winston from "winston";
+import * as Winston from 'winston';
 
 /**
  *

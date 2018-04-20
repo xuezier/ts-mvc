@@ -1,5 +1,5 @@
-import {HandlerMetadata} from "./HandlerMetadata";
-import {ControllerFilterMetadata} from "./ControllerFilterMetadata";
+import {HandlerMetadata} from './HandlerMetadata';
+import {ControllerFilterMetadata} from './ControllerFilterMetadata';
 
 export class ControllerMetadata {
 

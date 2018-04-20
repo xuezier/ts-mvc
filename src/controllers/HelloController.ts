@@ -9,9 +9,11 @@ export class HealthcheckController {
     private helloService: HelloService;
 
     @Get('/say')
-    public async indexAction(@QueryParam('q') q: string, @Res() res: Express.Response) {
+    public async indexAction(@QueryParam('q') q: string, @QueryParam('k') k: string, @Res() res: Express.Response) {
+      console.log(q, k);
       const result = this.helloService.echo(q);
-      res.send('Hello ' + result);
+      // res.send('Hello ' + result);
+      res.sendJson({name: 'heiheihei'});
     }
 
 }

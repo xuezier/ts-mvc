@@ -1,7 +1,7 @@
-import {Klass} from "../core/Klass";
-import {EventEmitter} from "events";
-import {EventListenerMetadata} from "./EventListenerMetadata";
-import {DependencyRegistry} from "../di/DependencyRegistry";
+import {Klass} from '../core/Klass';
+import {EventEmitter} from 'events';
+import {EventListenerMetadata} from './EventListenerMetadata';
+import {DependencyRegistry} from '../di/DependencyRegistry';
 
 export class EventListenerRegistry {
 

@@ -1,7 +1,7 @@
-import {Klass} from "../core/Klass";
-import {DIException} from "./error/DIException";
-import {Component} from "../core/Component";
-import {Reflection} from "../core/Reflection";
+import {Klass} from '../core/Klass';
+import {DIException} from './error/DIException';
+import {Component} from '../core/Component';
+import {Reflection} from '../core/Reflection';
 
 export class DependencyRegistry {
 

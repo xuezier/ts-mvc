@@ -16,7 +16,7 @@ export class DataContainer {
     if (typeof table !== 'undefined') {
       return table.tableName;
     } else {
-      throw new Error("[TYPED] => load table error");
+      throw new Error('[TYPED] => load table error');
     }
 }
 

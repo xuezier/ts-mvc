@@ -1,8 +1,8 @@
-import {MiddlewareMetadata} from "./MiddlewareMetadata";
-import {DependencyRegistry} from "../di/DependencyRegistry";
-import {Klass} from "../core/Klass";
-import {HandlerRegistry} from "./HandlerRegistry";
-import {MiddlewareOptions} from "./MiddlewareOptions";
+import {MiddlewareMetadata} from './MiddlewareMetadata';
+import {DependencyRegistry} from '../di/DependencyRegistry';
+import {Klass} from '../core/Klass';
+import {HandlerRegistry} from './HandlerRegistry';
+import {MiddlewareOptions} from './MiddlewareOptions';
 
 export class MiddlewareRegistry {
 

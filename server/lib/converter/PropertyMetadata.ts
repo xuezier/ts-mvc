@@ -1,4 +1,4 @@
-import {IConverter} from "./interface/IConverter";
+import {IConverter} from './interface/IConverter';
 
 export class PropertyMetadata {
 

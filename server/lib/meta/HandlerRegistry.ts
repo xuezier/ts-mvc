@@ -1,9 +1,9 @@
-import {HandlerMetadata} from "./HandlerMetadata";
-import {Reflection} from "../core/Reflection";
-import {HandlerParamMetadata} from "./HandlerParamMetadata";
-import {ConvertUtil} from "../util/ConvertUtil";
-import {ParamType} from "./enum/ParamType";
-import {HandlerParamOptions} from "./HandlerParamOptions";
+import {HandlerMetadata} from './HandlerMetadata';
+import {Reflection} from '../core/Reflection';
+import {HandlerParamMetadata} from './HandlerParamMetadata';
+import {ConvertUtil} from '../util/ConvertUtil';
+import {ParamType} from './enum/ParamType';
+import {HandlerParamOptions} from './HandlerParamOptions';
 
 export class HandlerRegistry {
 

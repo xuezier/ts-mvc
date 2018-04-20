@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -w -p ."
+    "build": "tsc -w -p .",
+    "start": "ts-node index.ts"
   },
   "author": "xuezi",
   "license": "ISC",

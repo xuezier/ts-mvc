@@ -1,7 +1,7 @@
-import ApplicationLoader from "../../ApplicationLoader";
-import {ControllerRegistry} from "../meta/ControllerRegistry";
-import {Klass} from "../core/Klass";
-import {DependencyRegistry} from "../di/DependencyRegistry";
+import ApplicationLoader from '../../ApplicationLoader';
+import {ControllerRegistry} from '../meta/ControllerRegistry';
+import {Klass} from '../core/Klass';
+import {DependencyRegistry} from '../di/DependencyRegistry';
 import * as bodyParser from 'body-parser';
 import * as Express from 'express';
 

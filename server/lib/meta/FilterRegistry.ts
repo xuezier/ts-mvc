@@ -1,7 +1,7 @@
-import {FilterMetadata} from "./FilterMetadata";
-import {DependencyRegistry} from "../di/DependencyRegistry";
-import {Klass} from "../core/Klass";
-import {HandlerRegistry} from "./HandlerRegistry";
+import {FilterMetadata} from './FilterMetadata';
+import {DependencyRegistry} from '../di/DependencyRegistry';
+import {Klass} from '../core/Klass';
+import {HandlerRegistry} from './HandlerRegistry';
 
 export class FilterRegistry {
 

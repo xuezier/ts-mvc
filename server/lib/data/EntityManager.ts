@@ -1,5 +1,5 @@
-import {Entity} from "./Entity";
-import {Klass} from "../core/Klass";
+import {Entity} from './Entity';
+import {Klass} from '../core/Klass';
 
 export class EntityManager {
 

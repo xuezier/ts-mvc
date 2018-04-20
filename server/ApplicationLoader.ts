@@ -104,27 +104,26 @@ export class ApplicationLoader {
 
     DependencyRegistry.set(ApplicationLoader, this);
 
-    this.init()
-      .invokeApplicationInitHook()
-      .loadExternalMiddlewares()
-      .loadComponents()
-      .loadMiddlewares()
-      .loadRoutes()
-      .loadErrorMiddlewares();
   }
 
-  public start(): Promise<any> {
+  public async start(): Promise<any> {
+    try {
+      await this.init();
+      await this.invokeApplicationInitHook()
+      await this.loadExternalMiddlewares()
+      await this.loadComponents()
+      await this.loadMiddlewares()
+      await this.loadRoutes()
+      await this.loadErrorMiddlewares();
 
-    return Promise
-      .resolve()
-      .then(() => this.run())
-      .catch(e => {
-        throw e;
-      });
+      await this.run();
+    } catch (e) {
+      throw e;
+    }
   }
 
 
-  private init() {
+  private async init() {
 
     InitializerRegistry
       .getInitializers()
@@ -133,18 +132,18 @@ export class ApplicationLoader {
         instance['init'].apply(instance);
       });
 
-    LogFactory.init(this.configDir, this.logDir, this.env);
-    ConnectionFactory.init(this.configDir, this.dbDir, this.env);
+    await LogFactory.init(this.configDir, this.logDir, this.env);
+    await ConnectionFactory.init(this.configDir, this.dbDir, this.env);
 
     return this;
   }
 
-  private invokeApplicationInitHook() {
+  private async invokeApplicationInitHook() {
     '$onInit' in this ? (<any> this).$onInit() : null;
     return this;
   }
 
-  private loadExternalMiddlewares() {
+  private async loadExternalMiddlewares() {
     const logger = LogFactory.getLogger();
 
     this.server.use(require('morgan')('combined', {
@@ -162,7 +161,7 @@ export class ApplicationLoader {
     return this;
   }
 
-  private loadComponents() {
+  private async loadComponents() {
 
     require('require-all')({
       dirname     :  this.srcDir,
@@ -173,7 +172,7 @@ export class ApplicationLoader {
     return this;
   }
 
-  private loadMiddlewares() {
+  private async loadMiddlewares() {
 
     MiddlewareRegistry
       .getMiddlewares({isErrorMiddleware: false})
@@ -186,7 +185,7 @@ export class ApplicationLoader {
     return this;
   }
 
-  private loadRoutes() {
+  private async loadRoutes() {
     ControllerRegistry.controllers.forEach(controllerMetadata => {
       const transformer = new ControllerTransformer(controllerMetadata);
       const router = transformer.transform();
@@ -196,7 +195,7 @@ export class ApplicationLoader {
     return this;
   }
 
-  private loadErrorMiddlewares() {
+  private async loadErrorMiddlewares() {
 
     MiddlewareRegistry
       .getMiddlewares({isErrorMiddleware: true})
@@ -209,7 +208,7 @@ export class ApplicationLoader {
     return this;
   }
 
-  private run() {
+  private async run() {
     this.server.listen(this.port, () => {
       const logger = LogFactory.getLogger();
       logger.info(`Application is listening on port ${this.port}`);

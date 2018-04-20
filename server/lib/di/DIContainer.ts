@@ -1,6 +1,6 @@
-import {PropertyHandler, ParamHandler} from "./Handler";
-import {Component} from "./Component";
-import {DIException} from "./error/DIException";
+import {PropertyHandler, ParamHandler} from './Handler';
+import {Component} from './Component';
+import {DIException} from './error/DIException';
 
 export class DIContainer {
 
@@ -35,7 +35,7 @@ export class DIContainer {
   //         throw new DIException('[Typed] can not find instance');
   //     }
   //
-  //     if (typeof nameOrType === "string") {
+  //     if (typeof nameOrType === 'string') {
   //
   //         this.instances.push({
   //             actionName: nameOrType,
@@ -151,7 +151,7 @@ export class DIContainer {
   }
 
   private static findComponentByNameOrType(nameOrType: string|Function) {
-    if (typeof nameOrType === "string") {
+    if (typeof nameOrType === 'string') {
       return this.findComponentByName(nameOrType);
     } else {
       return this.findComponentByType(nameOrType);

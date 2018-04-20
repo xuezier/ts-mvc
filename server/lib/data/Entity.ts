@@ -1,5 +1,5 @@
-import {DataContainer} from "./DataContainer";
-import {Klass} from "../core/Klass";
+import {DataContainer} from './DataContainer';
+import {Klass} from '../core/Klass';
 
 
 export class Entity {

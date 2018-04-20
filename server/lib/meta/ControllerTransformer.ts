@@ -1,8 +1,8 @@
-import {ControllerMetadata} from "./ControllerMetadata";
-import * as Express from "express";
-import {HandlerTransformer} from "./HandlerTransformer";
-import * as _ from "lodash";
-import {RouterLogger} from "../util/RouterLogger";
+import {ControllerMetadata} from './ControllerMetadata';
+import * as Express from 'express';
+import {HandlerTransformer} from './HandlerTransformer';
+import * as _ from 'lodash';
+import {RouterLogger} from '../util/RouterLogger';
 
 export class ControllerTransformer {
 

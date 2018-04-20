@@ -1,9 +1,9 @@
-import {PropertyMetadata} from "./PropertyMetadata";
-import {PropertyOptions} from "./PropertyOptions";
-import {Reflection} from "../core/Reflection";
+import {PropertyMetadata} from './PropertyMetadata';
+import {PropertyOptions} from './PropertyOptions';
+import {Reflection} from '../core/Reflection';
 import * as _ from 'lodash';
-import {DependencyRegistry} from "../di/DependencyRegistry";
-import {Klass} from "../core/Klass";
+import {DependencyRegistry} from '../di/DependencyRegistry';
+import {Klass} from '../core/Klass';
 
 export class PropertyRegistry {
 

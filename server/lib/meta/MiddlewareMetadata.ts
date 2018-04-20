@@ -1,5 +1,5 @@
-import {HandlerMetadata} from "./HandlerMetadata";
-import {MiddlewareOptions} from "./MiddlewareOptions";
+import {HandlerMetadata} from './HandlerMetadata';
+import {MiddlewareOptions} from './MiddlewareOptions';
 
 export class MiddlewareMetadata {
 
@@ -57,7 +57,7 @@ export class MiddlewareMetadata {
   public init(options?: MiddlewareOptions) {
 
     this._order = Number.MAX_SAFE_INTEGER;
-    this._baseUrl = "/";
+    this._baseUrl = '/';
     this._isErrorMiddleware = false;
 
     if (options && typeof options.order !== 'undefined') {

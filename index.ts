@@ -3,6 +3,4 @@ dotenv.config();
 
 import {Application} from './src/Application';
 
-import './src/controllers/HelloController';
-
 new Application().start();

@@ -1,12 +1,12 @@
-import {HandlerMetadata} from "./HandlerMetadata";
-import * as Express from "express";
-import {ParamType} from "./enum/ParamType";
-import {Klass} from "../core/Klass";
-import {DependencyRegistry} from "../di/DependencyRegistry";
-import * as _ from "lodash";
-import {ParamRequired} from "./error/ParamRequired";
-import {ConverterService} from "../converter/ConverterService";
-import {NextFunction} from "./interface/NextFunction";
+import {HandlerMetadata} from './HandlerMetadata';
+import * as Express from 'express';
+import {ParamType} from './enum/ParamType';
+import {Klass} from '../core/Klass';
+import {DependencyRegistry} from '../di/DependencyRegistry';
+import * as _ from 'lodash';
+import {ParamRequired} from './error/ParamRequired';
+import {ConverterService} from '../converter/ConverterService';
+import {NextFunction} from './interface/NextFunction';
 import {Request} from './interface/Request';
 import {Response} from './interface/Response';
 
@@ -29,7 +29,7 @@ export class HandlerTransformer {
     this._handlerMetadata = handlerMetadata;
   }
 
-  public transform() {
+  public async transform() {
 
     const isErrorHandler = this.handlerMetadata.isErrorHandler;
 

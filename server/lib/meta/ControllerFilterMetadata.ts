@@ -1,5 +1,5 @@
-import {FilterMetadata} from "./FilterMetadata";
-import {FilterOptions} from "./FilterOptions";
+import {FilterMetadata} from './FilterMetadata';
+import {FilterOptions} from './FilterOptions';
 
 export class ControllerFilterMetadata {
 

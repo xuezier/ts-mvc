@@ -1,6 +1,6 @@
-import {InitializerMetadata} from "./InitializerMetadata";
-import {DependencyRegistry} from "../di/DependencyRegistry";
-import {Klass} from "../core/Klass";
+import {InitializerMetadata} from './InitializerMetadata';
+import {DependencyRegistry} from '../di/DependencyRegistry';
+import {Klass} from '../core/Klass';
 
 export class InitializerRegistry {
 

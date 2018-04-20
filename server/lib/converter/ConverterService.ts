@@ -1,10 +1,10 @@
-import {Service} from "../meta/decorator/Service";
-import {PropertyRegistry} from "./PropertyRegistry";
-import {PropertyMetadata} from "./PropertyMetadata";
-import * as _ from "lodash";
-import {TypeUtil} from "../util/TypeUtil";
-import {Klass} from "../core/Klass";
-import {ConvertOptions} from "./ConvertOptions";
+import {Service} from '../meta/decorator/Service';
+import {PropertyRegistry} from './PropertyRegistry';
+import {PropertyMetadata} from './PropertyMetadata';
+import * as _ from 'lodash';
+import {TypeUtil} from '../util/TypeUtil';
+import {Klass} from '../core/Klass';
+import {ConvertOptions} from './ConvertOptions';
 
 /**
  * ConverterService used to convert class to object and vice-versa.
@@ -29,7 +29,7 @@ export class ConverterService {
 
 
     if (returnType === String) {
-      return "" + data;
+      return '' + data;
     }
 
     if (returnType === Number) {

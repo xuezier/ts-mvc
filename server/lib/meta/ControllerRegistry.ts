@@ -1,12 +1,12 @@
-import {ControllerMetadata} from "./ControllerMetadata";
-import {DependencyRegistry} from "../di/DependencyRegistry";
-import {Klass} from "../core/Klass";
-import {ControllerTransformer} from "./ControllerTransformer";
-import {HandlerRegistry} from "./HandlerRegistry";
-import {BeforeAfterFilterType} from "./enum/BeforeAfterFilterType";
-import {FilterOptions} from "./FilterOptions";
-import {FilterRegistry} from "./FilterRegistry";
-import {ControllerFilterMetadata} from "./ControllerFilterMetadata";
+import {ControllerMetadata} from './ControllerMetadata';
+import {DependencyRegistry} from '../di/DependencyRegistry';
+import {Klass} from '../core/Klass';
+import {ControllerTransformer} from './ControllerTransformer';
+import {HandlerRegistry} from './HandlerRegistry';
+import {BeforeAfterFilterType} from './enum/BeforeAfterFilterType';
+import {FilterOptions} from './FilterOptions';
+import {FilterRegistry} from './FilterRegistry';
+import {ControllerFilterMetadata} from './ControllerFilterMetadata';
 
 export class ControllerRegistry {
 
@@ -46,7 +46,7 @@ export class ControllerRegistry {
    *
    * for example:
    *
-   *   @RestController("/api/v1/")
+   *   @RestController('/api/v1/')
    *   class ATestController {
    *   }
    *
@@ -58,8 +58,8 @@ export class ControllerRegistry {
    *      is the controller class, in this example: ATestController or BTestController
    *
    *   baseUrl
-   *      is the controller base url, in this example: "/api/v1/"
-   *      if don't provide baseUrl in the decorator, then it would be blank string: ""
+   *      is the controller base url, in this example: '/api/v1/'
+   *      if don't provide baseUrl in the decorator, then it would be blank string: '
    *
    *   isRest
    *      is the flag indicate whether is a RestController or not
@@ -88,9 +88,9 @@ export class ControllerRegistry {
    *   @RestController()
    *   class ATestController {
    *
-   *      @Get("/")
+   *      @Get('/')
    *      public indexAction(request: Express.Request) {
-   *          return "Hello world";
+   *          return 'Hello world';
    *      }
    *   }
    *
@@ -98,16 +98,16 @@ export class ControllerRegistry {
    *      is the controller class, in this example: ATestController
    *
    *   actionName
-   *      is the action name, in this example: "indexAction"
+   *      is the action name, in this example: 'indexAction'
    *
    *   httpMethod
-   *      is the http request method for the action to handle, in this example: "get",
+   *      is the http request method for the action to handle, in this example: 'get',
    *      all the supported http methods
    *      TODO: support all the express methods
    *      please refer to https://expressjs.com/en/4x/api.html#app.METHOD
    *
    *   path
-   *      is the http request path for the action to handle, in this example: "/"
+   *      is the http request path for the action to handle, in this example: '/'
    *
    * @param type
    * @param actionName
@@ -145,7 +145,7 @@ export class ControllerRegistry {
         controllerMetadata.afterFilters.push(controllerFilterMetadata);
         return;
       default:
-        throw new Error("not valid arguments");
+        throw new Error('not valid arguments');
     }
   }
 
