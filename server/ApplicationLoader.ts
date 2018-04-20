@@ -81,7 +81,6 @@ export class ApplicationLoader {
 
     this._server = Express();
     const settings = ApplicationRegistry.settings;
-    console.log(settings);
     this._env = process.env.NODE_ENV || settings.env || 'development';
 
     this._rootDir = settings.rootDir;
@@ -104,11 +103,11 @@ export class ApplicationLoader {
 
     DependencyRegistry.set(ApplicationLoader, this);
 
+    this.init();
   }
 
   public async start(): Promise<any> {
     try {
-      await this.init();
       await this.invokeApplicationInitHook()
       await this.loadExternalMiddlewares()
       await this.loadComponents()

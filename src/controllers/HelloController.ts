@@ -1,5 +1,8 @@
 import {Get, Res, RestController, Inject, QueryParam} from '../../server';
 import {HelloService} from '../services/HelloService';
+
+import {MongoContainer} from '../../server/lib/data/MongoContainer';
+
 import * as Express from 'express';
 
 @RestController('/')
@@ -11,6 +14,9 @@ export class HealthcheckController {
     @Get('/say')
     public async indexAction(@QueryParam('q') q: string, @QueryParam('k') k: string, @Res() res: Express.Response) {
       console.log(q, k);
+      const db = MongoContainer.getDB();
+      // console.log(db.admin.find);
+      db.test.find({}).toArray().then(console.log);
       const result = this.helloService.echo(q);
       // res.send('Hello ' + result);
       res.sendJson({name: 'heiheihei'});
