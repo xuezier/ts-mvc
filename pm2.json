@@ -1,0 +1,12 @@
+{
+  "apps": [{
+    "name": "ts-mvc",
+    "script": "ts-node",
+    "args": [
+      "--",
+      "-P",
+      "tsconfig.json",
+      "index.ts"
+    ]
+  }]
+}

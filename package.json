@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -w -p .",
-    "start": "ts-node index.ts",
-    "nodemon": "nodemon --exec 'ts-node' index.ts"
+    "pm2": "pm2 start ts-node -- -P tsconfig.json index.ts",
+    "start": "ts-node -P tsconfig.json index.ts",
+    "nodemon": "nodemon --exec 'ts-node' -P tsconfig.json index.ts"
   },
   "author": "xuezi",
   "license": "ISC",
@@ -28,7 +29,6 @@
     "winston": "^2.4.1"
   },
   "devDependencies": {
-    "ts-node": "^6.0.0",
     "typescript": "^2.8.3"
   }
 }
