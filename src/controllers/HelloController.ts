@@ -1,7 +1,8 @@
-import {Get, Res, RestController, Inject, QueryParam} from '../../server';
-import {HelloService} from '../services/HelloService';
+import {Get, Res, RestController, Inject, QueryParam} from 'mvc';
 
-import {MongoContainer} from '../../server/lib/data/MongoContainer';
+import {UserService} from '../services';
+
+import {MongoContainer} from 'mvc/lib/data/MongoContainer';
 
 import * as Express from 'express';
 
@@ -9,17 +10,12 @@ import * as Express from 'express';
 export class HealthcheckController {
 
     @Inject()
-    private helloService: HelloService;
+    private userService: UserService;
 
     @Get('/say')
     public async indexAction(@QueryParam('q') q: string, @QueryParam('k') k: string, @Res() res: Express.Response) {
-      console.log(q, k);
-      const db = MongoContainer.getDB();
-      // console.log(db.admin.find);
-      db.test.find({}).toArray().then(console.log);
-      const result = this.helloService.echo(q);
-      // res.send('Hello ' + result);
-      res.sendJson({name: 'heiheihei'});
+      let user = await this.userService.findById('5ad45eea4dd34c98abd9fea9');
+      res.sendJson({name: 'heiheihei', user});
     }
 
 }

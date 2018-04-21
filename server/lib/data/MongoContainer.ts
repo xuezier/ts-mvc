@@ -12,9 +12,9 @@ export class MongoContainer {
 
   private static collections: {collection: Mongodb.Collection, name: string}[] = [];
 
-  private static beforeRegister: string[] = [];
+  private static beforeRegister: {target: any, name: string}[] = [];
 
-  public static async registerCollection(name: string) {
+  public static async registerCollection(target: any, name: string) {
     const connection = ConnectionFactory.getConnection();
 
     if(!connection) {
@@ -23,16 +23,21 @@ export class MongoContainer {
       ConnectionFactory.on('connected', () => {
         this.runRegister();
       });
-      return this.beforeRegister.push(name);
+      return this.beforeRegister.push({target, name});
     }
 
     const collection = MongoCollection(connection.collection(name), name);
+
+    if(target.constructor) {
+      target.prototype.collection = collection;
+    }
+
     this.collections.push({collection, name});
   }
 
   public static runRegister() {
-    this.beforeRegister.forEach((name: string) => {
-      this.registerCollection(name);
+    this.beforeRegister.forEach((args) => {
+      this.registerCollection(args.target, args.name);
     });
 
     this.beforeRegister = [];
