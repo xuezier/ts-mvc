@@ -82,7 +82,6 @@ export class ApplicationLoader {
     this._server = Express();
     const settings = ApplicationRegistry.settings;
     this._env = process.env.NODE_ENV || settings.env || 'development';
-
     this._rootDir = settings.rootDir;
 
     // Assign user defined folder structure to ApplicationLoader

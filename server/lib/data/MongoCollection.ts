@@ -8,6 +8,11 @@ export function MongoCollection(collection: Mongodb.Collection, name: string) {
   return new Proxy(collection, {
     get: (target: Mongodb.Collection, key: string) => {
       if(!(target instanceof Mongodb.Collection)) return;
+
+      if(key === '__proto__') {
+        return target[key];
+      }
+
       if (target.__proto__.hasOwnProperty(key) || target.hasOwnProperty(key)) {
         return target[key];
       }

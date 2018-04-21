@@ -12,7 +12,7 @@ export class LogFactory {
 
   private static logger: Winston.LoggerInstance;
 
-  public static init(logDir: string, env: string) {
+  public static init(configDir: string, logDir: string, env: string) {
 
     let defaultLogLevel = 'debug';
     const consoleTransport: Winston.TransportInstance = new (Winston.transports.Console)({
