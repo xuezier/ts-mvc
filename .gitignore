@@ -13,7 +13,7 @@ yarn.lock
 .env
 
 # custom
-src/
+# src/
 
 # mac
 .DS_Store

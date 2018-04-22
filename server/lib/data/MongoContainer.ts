@@ -29,7 +29,9 @@ export class MongoContainer {
     const collection = MongoCollection(connection.collection(name), name);
 
     if(target.constructor) {
-      target.prototype.collection = collection;
+      target.prototype.getCollection = function(): Mongodb.Collection {
+        return collection;
+      }
     }
 
     this.collections.push({collection, name});
