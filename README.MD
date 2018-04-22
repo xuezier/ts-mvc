@@ -9,9 +9,11 @@ the project is modified from project loon
 - cuid
 - dotenv
 - knex
+- mongodb
 - lodash
 - method-override
 - morgan
 - reflect-metadata
 - require-all
 - winston
+- module-alias

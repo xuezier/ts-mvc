@@ -12,7 +12,7 @@ export class ConnectionFactory {
   private static connection: Knex | IMongoDb;
   private static db: Knex | IMongoDb;
 
-  public static async init(configDir: string,dbDir: string, env: string) {
+  public static async init(configDir: string, dbDir: string, env: string) {
     const databaseConfig = Path.join(configDir, 'database.json');
 
     ConfigContainer.registerConfig(databaseConfig);

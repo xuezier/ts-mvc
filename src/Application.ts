@@ -3,7 +3,7 @@ import {ApplicationLoader, ApplicationSettings} from '../server';
 import {Collection} from 'mvc';
 
 import './middlewares';
-import './controllers/HelloController';
+import './controllers';
 
 import './model';
 

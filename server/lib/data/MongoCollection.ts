@@ -4,20 +4,34 @@ import {ConnectionFactory} from './ConnectionFactory';
 
 export function MongoCollection(collection: Mongodb.Collection, name: string) {
   const connection = ConnectionFactory.getConnection();
-
-  return new Proxy(collection, {
+  // console.log('get ',name)
+  return new Proxy({}, {
     get: (target: Mongodb.Collection, key: string) => {
-      if(!(target instanceof Mongodb.Collection)) return;
+      if(!(collection instanceof Mongodb.Collection)) return;
+
+      if (collection.__proto__.hasOwnProperty(key) || collection.hasOwnProperty(key)) {
+        const res = collection[key];
+        if(res instanceof Function) return res.bind(collection);
+        return res;
+        // return collection[key];
+      }
 
       if(key === '__proto__') {
-        return target[key];
+        return collection[key];
       }
 
-      if (target.__proto__.hasOwnProperty(key) || target.hasOwnProperty(key)) {
-        return target[key];
+      if (typeof key === 'symbol') {
+        return collection[key];
       }
 
-      if(typeof key === 'symbol') return;
+      if (key === 'toBSON') {
+        return null;
+      }
+
+      if (/^\_/.test(key)) {
+        return null;
+      }
+
       let collectionName = `${name}.${key}`;
       return MongoCollection(connection.collection(collectionName), collectionName);
     }
