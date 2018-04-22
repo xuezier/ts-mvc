@@ -44,7 +44,6 @@ export class ConnectionFactory {
 
   public static emit(eventName: string) {
     const callback = this.eventMap.get(eventName);
-    console.log(123456, callback);
     if(callback) {
       const args = Array.prototype.slice(1);
       callback.apply(callback, args);

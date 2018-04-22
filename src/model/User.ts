@@ -7,7 +7,7 @@ export class User {
   _id: Mongodb.ObjectID;
   email: string;
   email_verified: boolean;
-  mobile: number;
+  mobile: string;
   mobile_verified: boolean;
   name: string;
   description: string;

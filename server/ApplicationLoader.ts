@@ -1,7 +1,9 @@
-import {ApplicationRegistry} from './ApplicationRegistry';
 import * as Express from 'express';
 import * as Fs from 'fs';
 import * as cuid from 'cuid';
+
+import {ApplicationRegistry} from './ApplicationRegistry';
+import {ApplicationContainer} from './ApplicationContainer';
 
 import {ControllerRegistry} from './lib/meta/ControllerRegistry';
 import {HandlerTransformer} from './lib/meta/HandlerTransformer';
@@ -103,6 +105,16 @@ export class ApplicationLoader {
     DependencyRegistry.set(ApplicationLoader, this);
 
     this.init();
+  }
+
+  public install(name: string, model: any): Express {
+    model instanceof Function ? model = model() : null;
+    this._server[name] = model;
+    ApplicationContainer.setModel(name, model);
+  }
+
+  public getModel(name: string) {
+    return ApplicationContainer.getModel(name);
   }
 
   public async start(): Promise<any> {

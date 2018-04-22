@@ -57,9 +57,8 @@ export class MongoContainer {
 
   public static getDB() {
     const connection = ConnectionFactory.getConnection();
-
     if(!this._db) {
-      this._db = new Proxy({}, {
+      this._db = new Proxy(connection, {
         get: (target: object, key: string) => {
           // if((key === 'ObjectId') || (key === 'ObjectID')) {
           //   return this.ObjectID;
@@ -68,7 +67,6 @@ export class MongoContainer {
           // if(connection.hasOwnProperty(key) || connection.__proto__.hasOwnProperty(key)) {
           //   return connection[key];
           // }
-
           const collection = this.collections.find(col => {
             return col.name === key;
           });
@@ -89,13 +87,10 @@ export class MongoContainer {
     return new Proxy({name}, {
       get: (target: {name: string}, key: string) => {
         const collectionName = `${target.name}.${key}`;
-
         const collection = this.collections.find(col => {
-          return col.name = collectionName;
+          return col.name === collectionName;
         });
-
         if(collection) return collection.collection;
-
         return this.defineProxy(collectionName);
       }
     });

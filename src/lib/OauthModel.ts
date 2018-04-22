@@ -1,4 +1,4 @@
-import {MongoContainer} from 'mvc';
+import {MongoContainer, Inject} from 'mvc';
 
 import {User, OauthClient} from '../model';
 
@@ -11,9 +11,9 @@ export const OauthModel = {
    * @param {String} scope
    * @param {Function} callback
    */
-  async generateAccessToken(client: object, user: object, scope: string) {
+  // async generateAccessToken(client: object, user: object, scope: string) {
 
-  },
+  // },
   /**
    * Invoked to generate a new refresh token.
    * @param {Object} client
@@ -21,9 +21,9 @@ export const OauthModel = {
    * @param {String} scope
    * @param {Function} callback
    */
-  async generateRefreshToken(client: object, user: object, scope: string) {
+  // async generateRefreshToken(client: object, user: object, scope: string) {
 
-  },
+  // },
   /**
    * nvoked to retrieve a client using a client id or a client id/client secret combination, depending on the grant type.
    * @param {String} clientId
@@ -32,9 +32,7 @@ export const OauthModel = {
    */
   async getClient(clientId: string, clientSecret: string) {
     const db = MongoContainer.getDB();
-
     const client: OauthClient = await db.oauth.clients.findOne({client_id: clientId});
-
     if(!client) return null;
 
     if(clientSecret !== client.client_secret) {
@@ -74,6 +72,7 @@ export const OauthModel = {
       throw new Error('invalid_password');
     }
 
+    delete user.password;
     return user;
   },
   /**
@@ -81,7 +80,6 @@ export const OauthModel = {
    * @param {Object} token
    * @param {Object} client
    * @param {Object} user
-   * @param {Function} callback
    */
   async saveToken(
     token: {
@@ -92,30 +90,28 @@ export const OauthModel = {
       scope: string
     },
     client: object,
-    user: object,
-    callback: Function) {
-
+    user: object) {
+      token.client = client;
+      token.user = user;
+      return token;
   },
   /**
    * Invoked to check if the requested scope is valid for a particular client/user combination.
    * @param user
    * @param client
    * @param scope
-   * @param callback
    */
   async validateScope(
     user: obejct,
     client: {
       id: object
     },
-    scope: string,
-    callback: Function) {
-
+    scope: string) {
+      return 'read';
   },
   /**
    * Invoked to retrieve an existing access token previously saved through :ref:`Model#saveToken() <Model#saveToken>`.
    * @param accessToken
-   * @param callback
    */
   async getAccessToken(accessToken: string) {
 
@@ -124,27 +120,25 @@ export const OauthModel = {
    * Invoked during request authentication to check if the provided access token was authorized the requested scopes.
    * @param token
    * @param scope
-   * @param callback
    */
-  async verifyScope(
-    token: {
-      accessToken: string,
-      accessTokenExpiresAt: Date,
-      scope: string,
-      client: {
-        id: object
-      },
-      user: object
-    },
-    scope: string,
-    callback: Function) {
+  // async verifyScope(
+  //   token: {
+  //     accessToken: string,
+  //     accessTokenExpiresAt: Date,
+  //     scope: string,
+  //     client: {
+  //       id: object
+  //     },
+  //     user: object
+  //   },
+  //   scope: string) {
 
-  },
+  // },
   /**
    * Invoked to revoke a refresh token.
    * @param {Object} token
    */
-  revokeToken(
+  async revokeToken(
     token: {
       refreshToken: string,
       refreshTokenExpiresAt: Date,

@@ -16,7 +16,7 @@ export class UserService {
 
   public async createUser(info: {
     email: string,
-    mobile: number,
+    mobile: string,
     password: string,
   }) {
     const user = new User();

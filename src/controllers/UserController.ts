@@ -15,7 +15,7 @@ export class UserConteoller {
 
   @Post('/')
   public async createAction(
-    @BodyParam('mobile') mobile: number,
+    @BodyParam('mobile') mobile: string,
     @BodyParam('email') email: string,
     @BodyParam('password') password: string,
     @Res() res: Express.Response) {
