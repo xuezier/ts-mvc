@@ -57,9 +57,9 @@ export const OauthModel = {
   async getClient(clientId: string, clientSecret: string) {
     const db = MongoContainer.getDB();
     const client: OauthClient = await db.oauth.clients.findOne({client_id: clientId});
-    if(!client) return null;
+    if (!client) return null;
 
-    if(clientSecret !== client.client_secret) {
+    if (clientSecret !== client.client_secret) {
       throw new Error('invalid_clientSecret');
     }
 
@@ -86,13 +86,13 @@ export const OauthModel = {
 
     const user: User = await db.user.findOne(query);
 
-    if(!user) return null;
+    if (!user) return null;
 
     const pass = user.password;
 
     const hash = Util.md5(password + pass.salt);
 
-    if(!(hash === pass.hash)) {
+    if (!(hash === pass.hash)) {
       throw new Error('invalid_password');
     }
 
@@ -135,11 +135,11 @@ export const OauthModel = {
 
     const token: OauthToken = await db.oauth.tokens.findOne({accessToken});
 
-    if(!token) {
+    if (!token) {
       throw new Error('invalid_accessToken');
     }
 
-    if(token.accessTokenExpiresAt < new Date) {
+    if (token.accessTokenExpiresAt < new Date) {
       throw new Error('invalid_accessToken_expire');
     }
 
@@ -163,8 +163,8 @@ export const OauthModel = {
    * @param {Object} token
    */
   async revokeToken(token: OauthToken) {
-    const db =MongoContainer.getDB();
+    const db = MongoContainer.getDB();
     await db.oauth.tokens.findOneAndUpdate({_id: token._id}, {$set: {status: 'expired'}});
     return true;
   }
-}
+};

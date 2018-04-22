@@ -48,7 +48,6 @@ export function testEmail(email: string): boolean {
  */
 export function testMobile(mobile: number): boolean {
   let flag = true;
-  (!mobileReg.test(mobile)) ?
-  flag = false: flag = true;
+  (!mobileReg.test(mobile)) ? flag = false : flag = true;
   return flag;
 }

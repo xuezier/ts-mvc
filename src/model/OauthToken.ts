@@ -12,5 +12,5 @@ export class OauthToken {
   scope: string;
   user: Mongodb.ObjectID;
   client: Mongodb.ObjectID;
-  status: string
+  status: string;
 }

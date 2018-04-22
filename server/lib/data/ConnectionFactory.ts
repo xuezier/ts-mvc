@@ -36,7 +36,7 @@ export class ConnectionFactory {
   }
 
   public static on(eventName: string, callback: Function) {
-    if(this.eventMap.has(eventName)) {
+    if (this.eventMap.has(eventName)) {
       return;
     }
     this.eventMap.set(eventName, callback);
@@ -44,7 +44,7 @@ export class ConnectionFactory {
 
   public static emit(eventName: string) {
     const callback = this.eventMap.get(eventName);
-    if(callback) {
+    if (callback) {
       const args = Array.prototype.slice(1);
       callback.apply(callback, args);
     }

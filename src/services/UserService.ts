@@ -10,7 +10,7 @@ import * as Util from '../utils/util';
 export class UserService {
 
   @Inject()
-  private user : User;
+  private user: User;
 
   private db = MongoContainer.getDB();
 
@@ -26,7 +26,7 @@ export class UserService {
       mobile,
       email
     } = info;
-    if (password.length<6) {
+    if (password.length < 6) {
       throw new Error('invalid_password_length');
     } else if (mobile) {
       if (!Util.testMobile(mobile)) {
@@ -54,7 +54,7 @@ export class UserService {
     try {
       const user: User = await this.user.getCollection().findOne({_id: Mongodb.ObjectID(_id)});
       return user;
-    } catch(e) {
+    } catch (e) {
       throw e;
     }
   }

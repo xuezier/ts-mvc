@@ -20,6 +20,6 @@ export class OauthAuthenticationMiddleware implements IMiddleware {
     const token = await this.application.getModel('oauth').authenticate(request, response);
 
     req.user = token.user;
-    next()
+    next();
   }
 }

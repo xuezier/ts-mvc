@@ -17,7 +17,7 @@ export class SendJsonMiddleware implements IMiddleware {
         status = 200;
       }
 
-      if(!status) {
+      if (!status) {
         status = 200;
       }
 

@@ -17,7 +17,7 @@ export class MongoContainer {
   public static async registerCollection(target: any, name: string) {
     const connection = ConnectionFactory.getConnection();
 
-    if(!connection) {
+    if (!connection) {
       // throw new Error('database connection lose');
 
       ConnectionFactory.on('connected', () => {
@@ -28,10 +28,10 @@ export class MongoContainer {
 
     const collection = MongoCollection(connection.collection(name), name);
 
-    if(target.constructor) {
+    if (target.constructor) {
       target.prototype.getCollection = function(): Mongodb.Collection {
         return collection;
-      }
+      };
     }
 
     this.collections.push({collection, name});
@@ -59,7 +59,7 @@ export class MongoContainer {
 
   public static getDB() {
     const connection = ConnectionFactory.getConnection();
-    if(!this._db) {
+    if (!this._db) {
       this._db = new Proxy(connection, {
         get: (target: object, key: string) => {
           // if((key === 'ObjectId') || (key === 'ObjectID')) {
@@ -73,7 +73,7 @@ export class MongoContainer {
             return col.name === key;
           });
 
-          if(collection) {
+          if (collection) {
             return collection.collection;
           } else {
             return this.defineProxy(key);
@@ -92,7 +92,7 @@ export class MongoContainer {
         const collection = this.collections.find(col => {
           return col.name === collectionName;
         });
-        if(collection) return collection.collection;
+        if (collection) return collection.collection;
         return this.defineProxy(collectionName);
       }
     });
