@@ -12,6 +12,9 @@ package-lock.json
 yarn.lock
 .env
 
+# custom
+# src/
+
 # mac
 .DS_Store
 
