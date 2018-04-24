@@ -50,6 +50,18 @@ export class UserService {
     return user;
   }
 
+  public async findByMobile(mobile: string): User {
+    const user: User = await this.user.getCollection().findOne({mobile});
+
+    return user;
+  }
+
+  public async findByEmail(email: string): User {
+    const user: User = await this.user.getCollection().findOne({email});
+
+    return user;
+  }
+
   public async findById(_id: string): User {
     try {
       const user: User = await this.user.getCollection().findOne({_id: Mongodb.ObjectID(_id)});

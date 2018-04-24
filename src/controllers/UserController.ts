@@ -3,6 +3,8 @@ import {Get, Post, Res, Req, RestController, Inject, QueryParam, BodyParam} from
 import {UserService} from '../services';
 import {User} from '../model';
 
+import {YunPianSms} from '../vendor/YunPianSms';
+
 import {MongoContainer} from 'mvc/lib/data/MongoContainer';
 
 import * as Express from 'express';
@@ -13,6 +15,9 @@ export class UserConteoller {
   @Inject()
   private userService: UserService;
 
+  @Inject()
+  private yunPian: YunPianSms;
+
   @Post('/')
   public async createAction(
     @BodyParam('mobile') mobile: string,
@@ -21,7 +26,21 @@ export class UserConteoller {
     @Res() res: Express.Response) {
 
     try {
-      let user: User = await this.userService.createUser({mobile, email, password});
+      let user: User;
+
+      if (mobile) {
+        user = await this.userService.findByMobile(mobile);
+      } else if (email) {
+        user = await this.userService.findByEmail(email);
+      } else {
+        throw new Error('invalid_register');
+      }
+
+      if (user) {
+        throw new Error('user_exists');
+      }
+
+      user = await this.userService.createUser({mobile, email, password});
 
       res.sendJson(user);
     } catch (e) {

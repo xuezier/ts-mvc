@@ -27,6 +27,7 @@
     "morgan": "^1.9.0",
     "oauth2-server": "^3.0.0",
     "reflect-metadata": "^0.1.12",
+    "request": "^2.85.0",
     "require-all": "^2.2.0",
     "winston": "^2.4.1"
   },

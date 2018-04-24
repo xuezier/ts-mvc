@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+export * from './lib/config';
 export * from './lib/di';
 export * from './lib/data';
 export * from './lib/meta';

@@ -1,5 +1,7 @@
-import * as Express from 'express';
 import * as Fs from 'fs';
+import * as Path from 'path';
+
+import * as Express from 'express';
 import * as cuid from 'cuid';
 
 import {ApplicationRegistry} from './ApplicationRegistry';
@@ -17,6 +19,8 @@ import {RouterLogger} from './lib/util/RouterLogger';
 
 import {ConnectionFactory} from './lib/data/ConnectionFactory';
 import {LogFactory} from './lib/logger/LogFactory';
+
+import {ConfigContainer} from './lib/config/ConfigContainer';
 
 export class ApplicationLoader {
   private _server: Express.Application;
@@ -96,6 +100,7 @@ export class ApplicationLoader {
       }
     });
 
+    this.loadConfig();
 
     this._port = process.env.PORT || settings.port || 9000;
 
@@ -115,6 +120,18 @@ export class ApplicationLoader {
 
   public getModel(name: string) {
     return ApplicationContainer.getModel(name);
+  }
+
+  private loadConfig() {
+    const configDir: string = this.configDir;
+
+    const files = Fs.readdirSync(configDir);
+
+    files.forEach((file: string) => {
+      if (/\.json$/.test(file)) {
+        ConfigContainer.registerConfig(Path.join(configDir, file));
+      }
+    });
   }
 
   public async start(): Promise<any> {

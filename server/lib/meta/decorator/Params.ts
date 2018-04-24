@@ -1,6 +1,6 @@
-import {ParamType} from "../enum/ParamType";
-import {HandlerRegistry} from "../HandlerRegistry";
-import {HandlerParamOptions} from "../HandlerParamOptions";
+import {ParamType} from '../enum/ParamType';
+import {HandlerRegistry} from '../HandlerRegistry';
+import {HandlerParamOptions} from '../HandlerParamOptions';
 
 export function PathParam(expression: string, options?: HandlerParamOptions) {
   return (target: any, actionName: string, index: number) => {
@@ -40,31 +40,31 @@ export function SessionParam(expression: string, options?: HandlerParamOptions) 
 
 export function Req() {
   return (target: any, actionName: string, index: number) => {
-    registerHelper(target.constructor, ParamType.Request, actionName, index, "");
+    registerHelper(target.constructor, ParamType.Request, actionName, index, '');
   };
 }
 
 export function Res() {
   return (target: any, actionName: string, index: number) => {
-    registerHelper(target.constructor, ParamType.Response, actionName, index, "");
+    registerHelper(target.constructor, ParamType.Response, actionName, index, '');
   };
 }
 
 export function Next() {
   return (target: any, actionName: string, index: number) => {
-    registerHelper(target.constructor, ParamType.Next, actionName, index, "");
+    registerHelper(target.constructor, ParamType.Next, actionName, index, '');
   };
 }
 
 export function Err() {
   return (target: any, methodName: string, index: number) => {
-    registerHelper(target.constructor, ParamType.Error, methodName, index, "");
+    registerHelper(target.constructor, ParamType.Error, methodName, index, '');
   };
 }
 
 export function Data() {
   return (target: any, methodName: string, index: number) => {
-    registerHelper(target.constructor, ParamType.Data, methodName, index, "");
+    registerHelper(target.constructor, ParamType.Data, methodName, index, '');
   };
 }
 
