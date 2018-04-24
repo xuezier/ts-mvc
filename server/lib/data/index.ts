@@ -6,3 +6,5 @@ export * from './Entity';
 export * from './EntityManager';
 export * from './ConnectionFactory';
 export * from './MongoContainer';
+export * from './RedisContainer';
+export * from './decorator/Redis';

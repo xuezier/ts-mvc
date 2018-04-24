@@ -4,13 +4,13 @@ import * as request from 'request';
 
 import {Vendor, ConfigContainer, Inject} from 'mvc';
 
-import {YunPoanSmsConfigModel} from './model/YunPoanSmsConfigModel';
+import {YunPianSmsConfigModel, SmsCodeTemplate} from './model/YunPianSmsConfigModel';
 
 @Vendor()
 export class YunPianSms {
 
   @Inject()
-  private config: YunPoanSmsConfigModel;
+  private config: YunPianSmsConfigModel;
 
   private sends: Map<string, any> = new Map();
 
@@ -59,18 +59,23 @@ export class YunPianSms {
         body = JSON.parse(body);
 
         if (body.code) {
-          return reject(body.msg);
+          return reject(body);
         }
         resolve(body);
       });
     });
   }
 
-
   public async sendSingleSms(mobile: string, text: string) {
-    const url = this.config.SENDSINGLESMSURL;
+    const url = this.config.SENDSINGLEINTERNATIONALSMSURL;
 
     return await this._sendSingleSms(url, mobile, text);
+  }
+
+  public async sendSingleSmsCode(mobile: string, code: string) {
+    const text = SmsCodeTemplate(code);
+
+    return await this.sendSingleSms(mobile, text);
   }
 
 }
