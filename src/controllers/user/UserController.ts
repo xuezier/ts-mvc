@@ -30,7 +30,7 @@ export class UserConteoller {
   public async modifyInfoAction(@Req() req: Express.Request, @Res() res: Express.Response) {
     const body: User = req.body;
 
-    if(_.isEmpty(body)) {
+    if (_.isEmpty(body)) {
       throw new Error('put_nothing');
     }
 

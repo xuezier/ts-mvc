@@ -8,12 +8,12 @@ export class RedisContainer {
   public static async registerClient(target: any, config: IRedisConfig) {
     let name: string = config.name || 'default';
 
-    if(this.getClient(name)) return;
+    if (this.getClient(name)) return;
 
     delete config.name;
     const client: Redis.RedisClient = PromiseRedis.promiseRedis(config);
 
-    if(target.constructor) {
+    if (target.constructor) {
       target.prototype.client = client;
     }
 
@@ -21,7 +21,7 @@ export class RedisContainer {
   }
 
   public static getClient(name: string) {
-    if(!name) {
+    if (!name) {
       name = 'default';
     };
 
@@ -29,7 +29,7 @@ export class RedisContainer {
       return client.name === name;
     });
 
-    if(!redis) {
+    if (!redis) {
       return null;
     }
 

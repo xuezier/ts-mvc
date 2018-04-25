@@ -44,7 +44,7 @@ export class UserShippingAddressController {
 
     const address: UserShippingAddress = await this.shippingService.findAddressById(addressId);
 
-    if(!address) {
+    if (!address) {
       throw new DefinedError(404, 'address_not_found');
     }
     Object.assign(address, req.body);

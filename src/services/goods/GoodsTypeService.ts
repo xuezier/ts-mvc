@@ -14,7 +14,7 @@ export class GoodsTypeService {
     const name = type.name;
 
     const exists = await this.findGoodsTypeByName(name);
-    if(exists) throw new DefinedError(400, 'type_name_exists');
+    if (exists) throw new DefinedError(400, 'type_name_exists');
 
     const result = await this.goodsType.getCollection().insertOne(type);
     type._id = result.insertedId;
@@ -38,8 +38,8 @@ export class GoodsTypeService {
   }
 
   public async getGoodsTypeByPageAndPageSize(page: number, pagesize: number) {
-    if(!pagesize) pagesize = 20;
-    if(!page) page = 0;
+    if (!pagesize) pagesize = 20;
+    if (!page) page = 0;
 
     const total = await this.countTypesWithoutParent();
     const list = await this.getTypesWithoutParent(page, pagesize);

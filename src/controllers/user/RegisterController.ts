@@ -24,13 +24,13 @@ export class RegisterConteoller {
 
   @Post('/')
   public async checkSmsCodeMiddleware(@BodyParam('mobile') mobile: string, @BodyParam('code') code: string, @Next() next: Express.NextFunction) {
-    if(!code) {
+    if (!code) {
       throw new Error('code_not_null');
     }
 
     const existsCode = await this.smsRedis.getCodeByMobile(mobile);
 
-    if(existsCode === code) {
+    if (existsCode === code) {
       next();
     } else {
       throw new Error('invalid_code');

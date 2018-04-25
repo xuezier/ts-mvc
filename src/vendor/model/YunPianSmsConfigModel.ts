@@ -9,13 +9,13 @@ export class YunPianSmsConfigModel {
 }
 
 export interface SmsError {
-  code: number,
-  msg: string,
-  count: number,
-  fee: number,
-  unit: string,
-  mobile: string,
-  sid: number
+  code: number;
+  msg: string;
+  count: number;
+  fee: number;
+  unit: string;
+  mobile: string;
+  sid: number;
 }
 
 export function SmsCodeTemplate(code: string): string {

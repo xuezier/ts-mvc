@@ -23,5 +23,5 @@ export class SmsCodeVerifyTemplate {
 }
 
 export class SmsCodeVerifyReturnTemplate {
-  msg: string
+  msg: string;
 }

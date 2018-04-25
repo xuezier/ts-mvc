@@ -20,5 +20,5 @@ export class GoodsType {
   description: string;
   parent: Mongodb.ObjectID;
   status: string;
-  create_at: Date
+  create_at: Date;
 }

@@ -38,7 +38,7 @@ export class GoodsTypeController {
     _id = Mongodb.ObjectID(_id);
 
     let type: GoodsType = await this.goodsTypeService.findGoodsTypeById(_id);
-    if(!type) throw new DefinedError(400, 'not_found_type');
+    if (!type) throw new DefinedError(400, 'not_found_type');
 
     Object.assign(type, req.body);
     const modify = this.goodsType.schema(type);
@@ -52,7 +52,7 @@ export class GoodsTypeController {
     _id = Mongodb.ObjectID(_id);
 
     let type: GoodsType = await this.goodsTypeService.findGoodsTypeById(_id);
-    if(!type) throw new DefinedError(400, 'not_found_type');
+    if (!type) throw new DefinedError(400, 'not_found_type');
     type.status = 'disabled';
 
     const result = await this.goodsTypeService.modifyType(_id, type);
