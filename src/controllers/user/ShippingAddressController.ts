@@ -1,7 +1,7 @@
 import * as Express from 'express';
 import * as Mongodb from 'mongodb';
 
-import {RestController, Post, Get, Put, Res, Req, BodyParam, PathParam, Inject} from 'mvc';
+import {RestController, Post, Get, Put, Delete, Res, Req, BodyParam, PathParam, Inject} from 'mvc';
 import { UserShippingAddress, schema } from '../../model/UserShippingAddress';
 import { User } from '../../model';
 import { UserShippingAddressService } from '../../services/UserShippingAddressService';
@@ -13,11 +13,14 @@ export class UserShippingAddressController {
   @Inject()
   private shippingService: UserShippingAddressService;
 
+  @Inject()
+  private shippingAddress: UserShippingAddress;
+
   @Post('/')
   public async createAddressAction(@Req() req: Express.Resquest, @Res() res: Express.Response) {
     const body: UserShippingAddress = req.body;
 
-    const address = schema(body);
+    const address = this.shippingAddress.schema(body);
     const user: User = req.user;
     address.user = user._id;
 
@@ -45,8 +48,19 @@ export class UserShippingAddressController {
       throw new DefinedError(404, 'address_not_found');
     }
     Object.assign(address, req.body);
-    const modify: UserShippingAddress = schema(address);
+    const modify: UserShippingAddress = this.shippingAddress.schema(address);
     const result = await this.shippingService.modifyAddress(addressId, modify);
+    res.sendJson(result);
+  }
+
+  @Delete('/:addressId')
+  public async deleteAddressAction(@PathParam('addressId') addressId: string, @Req() req: Express.Resquest, @Res() res: Express.Response) {
+    addressId = Mongodb.ObjectID(addressId);
+
+    const user: User = req.user;
+
+    const result = await this.shippingService.deleteAddressByIdWithUser(addressId, user._id);
+
     res.sendJson(result);
   }
 }

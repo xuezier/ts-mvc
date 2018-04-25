@@ -42,4 +42,8 @@ export class UserShippingAddressService {
   public async modifyAddress(_id, info: UserShippingAddress) {
     return await this._modifyAddress(_id, info);
   }
+
+  public async deleteAddressByIdWithUser(_id: Mongodb.ObjectID, user: Mongodb.ObjectID) {
+    return await this.shippingAddress.getCollection().remove({_id, user});
+  }
 }

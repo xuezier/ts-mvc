@@ -4,27 +4,7 @@ import * as _ from 'lodash';
 
 import {Model, Collection} from 'mvc';
 import { DefinedError } from './DefinedError';
-
-@Collection('user.shipping.address')
-@Model()
-export class UserShippingAddress {
-  _id: Mongodb.ObjectID;
-  user: Mongodb.ObjectID;
-  receiver: string;
-  address: {
-    zip: string;
-    province: string;
-    city: string;
-    county: string;
-    town: string;
-    street: string;
-    mark: string;
-  };
-  mobile: string;
-  email: string;
-  telephone: string;
-  create_at: Date;
-}
+import { ModelSchema } from '../decorator/ModelSchema';
 
 export const UserShippingAddressSchema = new SchemaObject({
   receiver: {type: String, minLength: 1, required: true},
@@ -43,11 +23,24 @@ export const UserShippingAddressSchema = new SchemaObject({
   create_at: {type: Date, default: () => new Date}
 });
 
-export function schema(info: UserShippingAddress): UserShippingAddress {
-  const address = new UserShippingAddressSchema(info);
-  const errors = address.getErrors();
-  if(!_.isEmpty(errors)) {
-    throw new DefinedError(400, `invalid_value_${errors[0].fieldSchema.name}`, errors[0].errorMessage);
-  }
-  return address.toObject();
+@Collection('user.shipping.address')
+@Model()
+@ModelSchema(UserShippingAddressSchema)
+export class UserShippingAddress {
+  _id: Mongodb.ObjectID;
+  user: Mongodb.ObjectID;
+  receiver: string;
+  address: {
+    zip: string;
+    province: string;
+    city: string;
+    county: string;
+    town: string;
+    street: string;
+    mark: string;
+  };
+  mobile: string;
+  email: string;
+  telephone: string;
+  create_at: Date;
 }
