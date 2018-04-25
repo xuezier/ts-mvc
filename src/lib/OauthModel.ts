@@ -1,9 +1,15 @@
-import {MongoContainer, Inject} from 'mvc';
+import {MongoContainer, Inject, Model, Controller} from 'mvc';
 
 import {User, OauthClient, OauthToken} from '../model';
 
 import * as Util from '../utils/util';
-export const OauthModel = {
+import { OauthAccessTokenRedisService } from '../services/RedisService';
+
+@Controller()
+export class OauthModel {
+  @Inject()
+  private redis = new OauthAccessTokenRedisService;
+
   /**
    * Invoked to generate a new access token.
    * @param {Object} client
@@ -11,9 +17,9 @@ export const OauthModel = {
    * @param {String} scope
    * @param {Function} callback
    */
-  // async generateAccessToken(client: object, user: object, scope: string) {
+  // public async generateAccessToken(client: object, user: object, scope: string) {
 
-  // },
+  // }
   /**
    * Invoked to generate a new refresh token.
    * @param {Object} client
@@ -21,14 +27,14 @@ export const OauthModel = {
    * @param {String} scope
    * @param {Function} callback
    */
-  // async generateRefreshToken(client: object, user: object, scope: string) {
+  // public async generateRefreshToken(client: object, user: object, scope: string) {
 
-  // },
+  // }
   /**
    * Invoked to retrieve an existing refresh token previously saved through Model#saveToken().
    * @param {String} refreshToken
    */
-  async getRefreshToken(refreshToken: string) {
+  public async getRefreshToken(refreshToken: string) {
     const db = MongoContainer.getDB();
 
     const token: OauthToken = await db.oauth.tokens.findOne({refreshToken});
@@ -47,14 +53,14 @@ export const OauthModel = {
     token.client = client;
 
     return token;
-  },
+  }
   /**
    * nvoked to retrieve a client using a client id or a client id/client secret combination, depending on the grant type.
    * @param {String} clientId
    * @param {String} clientSecret
    * @param {Function} callback
    */
-  async getClient(clientId: string, clientSecret: string) {
+  public async getClient(clientId: string, clientSecret: string) {
     const db = MongoContainer.getDB();
     const client: OauthClient = await db.oauth.clients.findOne({client_id: clientId});
     if (!client) return null;
@@ -64,14 +70,14 @@ export const OauthModel = {
     }
 
     return client;
-  },
+  }
   /**
    * Invoked to retrieve a user using a username/password combination.
    * @param {String} username
    * @param {String} password
    * @param {Function} callback
    */
-  async getUser(username: string, password: string) {
+  public async getUser(username: string, password: string) {
     const db = MongoContainer.getDB();
 
     const query = {};
@@ -98,14 +104,14 @@ export const OauthModel = {
 
     delete user.password;
     return user;
-  },
+  }
   /**
    * Invoked to save an access token and optionally a refresh token, depending on the grant type.
    * @param {Object} token
    * @param {Object} client
    * @param {Object} user
    */
-  async saveToken(token: OauthToken, client: OauthClient, user: User) {
+  public async saveToken(token: OauthToken, client: OauthClient, user: User) {
 
     const db = MongoContainer.getDB();
 
@@ -116,24 +122,34 @@ export const OauthModel = {
     await db.oauth.tokens.insertOne(token);
 
     return token;
-  },
+  }
   /**
    * Invoked to check if the requested scope is valid for a particular client/user combination.
    * @param user
    * @param client
    * @param scope
    */
-  async validateScope(user: User, client: OauthClient, scope: string) {
+  public async validateScope(user: User, client: OauthClient, scope: string) {
     return 'read';
-  },
+  }
   /**
    * Invoked to retrieve an existing access token previously saved through :ref:`Model#saveToken() <Model#saveToken>`.
    * @param accessToken
    */
-  async getAccessToken(accessToken: string) {
+  public async getAccessToken(accessToken: string) {
+    let token: OauthToken = await this.redis.getAccessToken(accessToken);
+    let user: User;
+    if (token) {
+      user = await this.redis.getUser(token.user);
+      if (user) {
+        token.user = user;
+        return token;
+      }
+    }
+
     const db = MongoContainer.getDB();
 
-    const token: OauthToken = await db.oauth.tokens.findOne({accessToken});
+    token = await db.oauth.tokens.findOne({accessToken});
 
     if (!token) {
       throw new Error('invalid_accessToken');
@@ -143,26 +159,29 @@ export const OauthModel = {
       throw new Error('invalid_accessToken_expire');
     }
 
-    const user: User = await db.user.findOne({_id: token.user});
+    user = await db.user.findOne({_id: token.user});
     delete user.password;
+
+    await this.redis.setAccessToken(token);
+    await this.redis.setUser(user);
     token.user = user;
 
     return token;
-  },
+  }
   /**
    * Invoked during request authentication to check if the provided access token was authorized the requested scopes.
    * @param token
    * @param scope
    */
-  async verifyScope(token: OauthToken, scope: string) {
+  public async verifyScope(token: OauthToken, scope: string) {
     // console.log(scope);
     return token.scope === scope;
-  },
+  }
   /**
    * Invoked to revoke a refresh token.
    * @param {Object} token
    */
-  async revokeToken(token: OauthToken) {
+  public async revokeToken(token: OauthToken) {
     const db = MongoContainer.getDB();
     await db.oauth.tokens.findOneAndUpdate({_id: token._id}, {$set: {status: 'expired'}});
     return true;

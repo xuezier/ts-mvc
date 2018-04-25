@@ -3,7 +3,7 @@ import {Middleware, IMiddleware, Res, Req, Next, ApplicationLoader, Inject} from
 import * as Express from 'express';
 import * as OauthServer from 'oauth2-server';
 
-@Middleware({baseUrl: '/user'})
+@Middleware({baseUrl: '/api'})
 export class OauthAuthenticationMiddleware implements IMiddleware {
 
   @Inject()

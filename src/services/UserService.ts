@@ -70,4 +70,19 @@ export class UserService {
       throw e;
     }
   }
+
+  private async _modify(_id: Mongodb.ObjectID, info: User) {
+    const result = await this.user.getCollection().findOneAndUpdate({_id}, {$set: info}, {
+      returnOriginal: false,
+      upsert: false
+    });
+
+    const user: User = result.value;
+    delete user.password;
+    return user;
+  }
+
+  public async modify(_id: Mongodb.ObjectID, info: User) {
+    return await this._modify(_id, info);
+  }
 }

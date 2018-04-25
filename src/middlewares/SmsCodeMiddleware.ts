@@ -34,24 +34,24 @@ export class SmsCodeDaylyLimitMiddleware implements IMiddleware {
   }
 }
 
-@Middleware({baseUrl: '/user'})
-export class CheckSmsCode implements IMiddleware {
+// @Middleware({baseUrl: '/user'})
+// export class CheckSmsCode implements IMiddleware {
 
-  @Inject()
-  private smsRedis: SmsRedisService;
+//   @Inject()
+//   private smsRedis: SmsRedisService;
 
-  public async use(@BodyParam('mobile') mobile: string, @BodyParam('code') code: string, @Next() next: Express.NextFunction) {
+//   public async use(@BodyParam('mobile') mobile: string, @BodyParam('code') code: string, @Next() next: Express.NextFunction) {
 
-    if(!code) {
-      throw new Error('code_not_null');
-    }
+//     if(!code) {
+//       throw new Error('code_not_null');
+//     }
 
-    const existsCode = await this.smsRedis.getCodeByMobile(mobile);
+//     const existsCode = await this.smsRedis.getCodeByMobile(mobile);
 
-    if(existsCode === code) {
-      next();
-    } else {
-      throw new Error('invalid_code');
-    }
-  }
-}
+//     if(existsCode === code) {
+//       next();
+//     } else {
+//       throw new Error('invalid_code');
+//     }
+//   }
+// }

@@ -1,22 +1,41 @@
-import {Get, Post, Res, Req, RestController, Inject, QueryParam, BodyParam} from 'mvc';
+import {Get, Post, Res, Req, RestController, Inject, QueryParam, BodyParam, Next} from 'mvc';
 
-import {UserService} from '../services';
-import {User} from '../model';
+import {UserService} from '../../services';
+import {User} from '../../model';
 
-import {YunPianSms} from '../vendor/YunPianSms';
+import {YunPianSms} from '../../vendor/YunPianSms';
 
 import {MongoContainer} from 'mvc/lib/data/MongoContainer';
 
 import * as Express from 'express';
+import { SmsRedisService } from '../../services/RedisService';
 
 @RestController('/user')
-export class UserConteoller {
+export class RegisterConteoller {
 
   @Inject()
   private userService: UserService;
 
   @Inject()
   private yunPian: YunPianSms;
+
+  @Inject()
+  private smsRedis: SmsRedisService;
+
+  @Post('/')
+  public async checkSmsCodeMiddleware(@BodyParam('mobile') mobile: string, @BodyParam('code') code: string, @Next() next: Express.NextFunction) {
+    if(!code) {
+      throw new Error('code_not_null');
+    }
+
+    const existsCode = await this.smsRedis.getCodeByMobile(mobile);
+
+    if(existsCode === code) {
+      next();
+    } else {
+      throw new Error('invalid_code');
+    }
+  }
 
   @Post('/')
   public async createAction(
@@ -46,12 +65,5 @@ export class UserConteoller {
     } catch (e) {
       throw e;
     }
-  }
-
-  @Get('/')
-  public async infoAction(@Req() req: Express.Request, @Res() res: Express.Response) {
-    const user: User = req.user;
-
-    res.sendJson(user);
   }
 }

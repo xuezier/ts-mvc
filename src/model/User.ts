@@ -1,5 +1,12 @@
 import * as Mongodb from 'mongodb';
+import * as SchemaObject from 'schema-object';
+
 import {Collection, Model} from 'mvc';
+
+export enum Sex {
+  F='F',
+  M='M'
+}
 
 @Collection('user')
 @Model()
@@ -33,4 +40,39 @@ export class User {
     type: string;
     time: Date;
   };
+}
+
+export const UserSchema = new SchemaObject({
+  email: String,
+  email_verified: Boolean,
+  mobile: String,
+  mobile_verified: Boolean,
+  name: String,
+  description: String,
+  avatar: String,
+  password: new SchemaObject({
+    hash: String,
+    salt: String,
+  }),
+  birthdate: Date,
+  address: new SchemaObject({
+      country: String,
+      province: String,
+      city: String,
+      address: String,
+      district: String,
+  }),
+  sex: {type: String, enum: ['M', 'F']},
+  locale: String,
+  timezone: String,
+  activiated: Boolean,
+  create_at: Date,
+  last_login: new SchemaObject({
+    type: String,
+    time: Date,
+  })
+});
+
+export function schema(user: User): User {
+  return new UserSchema(user).toObject();
 }

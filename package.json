@@ -30,6 +30,7 @@
     "reflect-metadata": "^0.1.12",
     "request": "^2.85.0",
     "require-all": "^2.2.0",
+    "schema-object": "^4.0.11",
     "winston": "^2.4.1"
   },
   "devDependencies": {

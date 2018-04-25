@@ -12,14 +12,15 @@ import {Application} from './src/Application';
 import {OauthModel} from './src/lib/OauthModel';
 
 const application = new Application();
-new Application().start();
 
 application.install('oauth', new OauthServer({
-  model: OauthModel,
+  model: new OauthModel(),
   debug: true,
   accessTokenLifetime: 1800,
   refreshTokenLifetime: 3600 * 24 * 15,
 }));
+
+application.start();
 
 process.on('uncaughtException', (err: Error) => {
   console.error('Caught exception: ' + err.stack);

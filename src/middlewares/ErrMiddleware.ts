@@ -12,7 +12,7 @@ export class ErrMiddleware implements IMiddleware {
     const {message, status, description} = err;
 
     if (message in DefinedError) {
-      let e: DefinedErrorModel = DefinedError(message);
+      let e: DefinedErrorModel = DefinedError[message];
       if (status) e.status = status;
       if (!e.status) e.status = 400;
       if (description) e.description = description;
@@ -21,7 +21,7 @@ export class ErrMiddleware implements IMiddleware {
       e.message = e.message;
       res.json(e);
     } else {
-      console.error(e.stack);
+      console.error(err.stack);
       res.json({
         status: 500,
         message
