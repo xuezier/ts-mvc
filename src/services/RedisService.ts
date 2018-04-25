@@ -53,6 +53,8 @@ export class OauthAccessTokenRedisService {
 
   public async getAccessToken(key: string) {
     const token: OauthToken = await this.client.hmget(key);
+    if(!token) return null;
+
     token.accessTokenExpiresAt = new Date(token.accessTokenExpiresAt);
     token.refreshTokenExpiresAt = new Date(token.refreshTokenExpiresAt);
     return token;

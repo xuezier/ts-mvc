@@ -1,4 +1,4 @@
-export const DefinedError = {
+export const DefinedErrors = {
   'invalid_register': {
     status: 400,
     description: 'the registration information is incomplete'
@@ -6,6 +6,10 @@ export const DefinedError = {
   'user_exists': {
     status: 400,
     description: 'user has registered'
+  },
+  'put_nothing': {
+    status: 400,
+    description: 'send nothing to modify'
   },
   'invalid_refreshToken': {
     status: 403

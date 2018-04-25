@@ -1,8 +1,8 @@
 import * as Express from 'express';
 import {ErrorMiddleware, IMiddleware, Err, Res} from 'mvc';
 
-import {DefinedError} from '../lib/DefinedError';
-import { DefinedErrorModel } from '../model/DefinedError';
+import {DefinedErrors} from '../lib/DefinedError';
+import { DefinedError } from '../model/DefinedError';
 
 @ErrorMiddleware()
 export class ErrMiddleware implements IMiddleware {
@@ -11,8 +11,8 @@ export class ErrMiddleware implements IMiddleware {
     // console.log(err);
     const {message, status, description} = err;
 
-    if (message in DefinedError) {
-      let e: DefinedErrorModel = DefinedError[message];
+    if (message in DefinedErrors) {
+      let e: DefinedError = DefinedErrors[message];
       if (status) e.status = status;
       if (!e.status) e.status = 400;
       if (description) e.description = description;
@@ -20,6 +20,10 @@ export class ErrMiddleware implements IMiddleware {
 
       e.message = e.message;
       res.json(e);
+    } else if (err instanceof DefinedError) {
+      if(!err.status) err.status = 400;
+      if(!err.description) err.description = err.message;
+      res.json(err);
     } else {
       console.error(err.stack);
       res.json({
