@@ -37,7 +37,7 @@ export class YunPianService {
     sms.mobile = mobile;
     sms.code = code;
     sms.create_at = new Date;
-    console.log(sms);
+    // console.log(sms);
     return await this.smsCode.getCollection().insertOne(sms);
   }
 

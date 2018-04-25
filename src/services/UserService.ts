@@ -44,7 +44,7 @@ export class UserService {
     user.password = pass;
 
     user.create_at = new Date;
-    console.log(user);
+    // console.log(user);
     const insertResult = await this.user.getCollection().insertOne(user);
     user._id = insertResult.insertedId;
     return user;

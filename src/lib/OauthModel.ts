@@ -155,7 +155,7 @@ export const OauthModel = {
    * @param scope
    */
   async verifyScope(token: OauthToken, scope: string) {
-    console.log(scope);
+    // console.log(scope);
     return token.scope === scope;
   },
   /**

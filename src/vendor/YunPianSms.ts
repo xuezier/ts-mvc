@@ -14,10 +14,6 @@ export class YunPianSms {
 
   private sends: Map<string, any> = new Map();
 
-  public async send() {
-    console.log(this.config);
-  }
-
   /**
    * convert phone number to +xxxxx
    * @param {String} mobile

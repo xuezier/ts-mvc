@@ -43,7 +43,7 @@ export class Bmob {
         this.sends.delete(mobile);
 
         if (err) return reject(err);
-        console.log(body)
+        // console.log(body)
         if (res.statusCode !== 200) return reject('request_smsCode_error');
 
         const result: SmsCodeRetrunTemplate = JSON.parse(body);
