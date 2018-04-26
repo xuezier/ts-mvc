@@ -8,6 +8,7 @@ export const GoodsTypeSchema = new SchemaObject({
   name: {type: String, required: true, minLength: 1},
   description: {type: String, default: ''},
   status: {type: String, enum: ['active', 'disabled'], default: 'active'},
+  parent: {type: Object, preserveNull: true},
   create_at: {type: Date, default: () => new Date}
 });
 

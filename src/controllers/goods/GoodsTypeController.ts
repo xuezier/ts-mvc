@@ -5,6 +5,7 @@ import {RestController, Post, Get, Put, Delete, Req, Res, Data, Next, QueryParam
 import { GoodsType } from '../../model/goods/Type';
 import { GoodsTypeService } from '../../services';
 import { DefinedError } from '../../model/DefinedError';
+import { BodyParam } from '../../../server';
 
 @RestController('/api/goods/type')
 export class GoodsTypeController {
@@ -16,8 +17,14 @@ export class GoodsTypeController {
   private goodsTypeService: GoodsTypeService;
 
   @Post('/')
-  public async createAction(@Req() req: Express.Request, @Res() res: Express.Response) {
+  public async createAction(@BodyParam('parent') parent: string, @Req() req: Express.Request, @Res() res: Express.Response) {
     const body = req.body;
+
+    if (parent) {
+      console.log(parent,123)
+      body.parent = Mongodb.ObjectID(parent);
+    }
+
     const info = this.goodsType.schema(body);
 
     const type: GoodsType = await this.goodsTypeService.createType(info);
@@ -26,10 +33,19 @@ export class GoodsTypeController {
   }
 
   @Get('/')
-  public async getTypeListAction(@QueryParam('page') page: number, @QueryParam('pagesize') pagesize: number, @Res() res: Express.Response) {
-    const result = await this.goodsTypeService.getGoodsTypeByPageAndPageSize(page, pagesize);
+  public async getTypeListAction(@Res() res: Express.Response) {
+    const result = await this.goodsTypeService.getGoodsTypeWithoutParent();
 
     res.sendJson(result);
+  }
+
+  @Get('/:_id')
+  public async getChildTypeListAction(@PathParam('_id') _id: string, @Res() res: Express.Response) {
+    _id = Mongodb.ObjectID(_id);
+
+    const result = await this.goodsTypeService.getGoodsTypeWithParent(_id);
+
+    res.sendJson(type);
   }
 
 

@@ -29,20 +29,36 @@ export class GoodsTypeService {
     return await this.goodsType.getCollection().findOne({_id});
   }
 
+  public async getTypesWithParent(parent: Mongodb.ObjectID): GoodsType[] {
+    return await this.goodsType.getCollection().find({parent, status: 'active'}).toArray();
+  }
+
+  public async countTypesWithParent(parent: Mongodb.ObjectID) {
+    return await this.goodsType.getCollection().count({parent, status: 'active'});
+  }
+
+  public async getGoodsTypeWithParent(parent: Mongodb.ObjectID) {
+    const total = await this.countTypesWithParent(parent);
+    const list = await this.getTypesWithParent(parent);
+
+    return {
+      list,
+      nums: list.length,
+      total
+    };
+  }
+
   public async countTypesWithoutParent() {
     return await this.goodsType.getCollection().count({parent: {$exists: false}, status: 'active'});
   }
 
-  public async getTypesWithoutParent(page: number, pagesize: number) {
-    return await this.goodsType.getCollection().find({parent: {$exists: false}, status: 'active'}).skip(page * pagesize).limit(pagesize).toArray();
+  public async getTypesWithoutParent(): Array {
+    return await this.goodsType.getCollection().find({parent: {$exists: false}, status: 'active'}).toArray();
   }
 
-  public async getGoodsTypeByPageAndPageSize(page: number, pagesize: number) {
-    if (!pagesize) pagesize = 20;
-    if (!page) page = 0;
-
+  public async getGoodsTypeWithoutParent() {
     const total = await this.countTypesWithoutParent();
-    const list = await this.getTypesWithoutParent(page, pagesize);
+    const list = await this.getTypesWithoutParent();
 
     return {
       list,
