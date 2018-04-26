@@ -63,7 +63,7 @@ export class QiNiu {
 
     const result: QiniuUploadResultModel = await this._uploadFile(token, key, filePath);
 
-    result.server_url = this.config.server_url;
+    result.server_url = this.config.SERVER_URL;
     return result;
   }
 
