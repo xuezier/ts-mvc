@@ -4,6 +4,44 @@ import {Service, Redis} from 'mvc';
 import { OauthToken, User } from '../model';
 
 @Service()
+@Redis({name: 'code.image', prefix: 'code.image'})
+export class ImageCodeRedisService {
+  private codeId: number = 0;
+  private ttl: number = 180;
+
+  public async mobileExists(mobile: string): boolean {
+    const exists: number = await this.client.exists(`.mobile${mobile}`);
+    return exists === 1 ? true : false;
+  }
+
+  public async delOldCode(mobile: string): boolean {
+    const code = await this.getCodeByMobile(mobile);
+    await this.client.del(code);
+    await this.client.del(`.mobile${mobile}`);
+    return true;
+  }
+
+  public async codeExists(code: string): boolean {
+    const exists: number = await this.client.exists(code);
+    return exists === 1 ? true : false;
+  }
+
+  public async bindImageCodeWithMobile(code: string, mobile: string): boolean {
+    await this.client.setex(code, this.ttl, mobile);
+    await this.client.setex(`.mobole${mobile}`, this.ttl, code);
+    return true;
+  }
+
+  public async getMobileByCode(code: string): string {
+    return await this.client.get(code);
+  }
+
+  public async getCodeByMobile(mobile: string): string {
+    return await this.client.get(`.mobile${mobile}`);
+  }
+}
+
+@Service()
 @Redis({name: 'sms.code', prefix: 'sms.code'})
 export class SmsRedisService {
 
@@ -38,7 +76,7 @@ export class SmsRedisService {
 }
 
 @Service()
-@Redis({name: 'oauth.token', prefix: 'oauth.token'})
+@Redis({name: 'oauth.token', prefix: 'oauth.token', db: 1})
 export class OauthAccessTokenRedisService {
 
   public async setAccessToken(token: OauthToken) {

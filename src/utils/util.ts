@@ -3,7 +3,7 @@ import * as crypto from 'crypto';
 // 邮箱正则表达式
 const emailReg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 // 手机号正则表达式
-const mobileReg = /^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8}$/;
+const mobileReg = /^1[3|4|5|7|8][0-9]{9}$/;
 
 /**
  * encrypt string with md5 and auto add salt
