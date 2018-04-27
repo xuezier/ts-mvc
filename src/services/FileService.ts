@@ -31,4 +31,12 @@ export class FileService {
 
     return saveFile;
   }
+
+  public async getFileById(_id: Mongodb.ObjectID) {
+    return await this.file.getCollection().findOne({_id});
+  }
+
+  public generateFileLink(key: string): string {
+    return this.qiniu.generateLink(key, this.qiniu.config.TOKEN_EXPIRE);
+  }
 }

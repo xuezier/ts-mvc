@@ -1,9 +1,10 @@
 import * as Express from 'express';
+import * as Mongodb from 'mongodb';
 
-import {Get, Post, Res, Req, RestController, Inject, QueryParam} from 'mvc';
+import {Get, Post, Res, Req, RestController, Inject, QueryParam, PathParam} from 'mvc';
 import { QiNiu } from '../vendor/Qiniu';
 import { FileService } from '../services';
-import { UploadFile } from '../model';
+import { UploadFile, File } from '../model';
 import { DefinedError } from '../model/DefinedError';
 
 @RestController('/api/file')
@@ -15,7 +16,7 @@ export class FileUploaderController {
   private fileService: FileService;
 
   @Post()
-  private async uploadAction(@Req() req: Express.Request, @Res() res: Express.Response) {
+  public async uploadAction(@Req() req: Express.Request, @Res() res: Express.Response) {
     const files: {[key: string]: UploadFile} = req.files
 
     let keys = Object.keys(files);
@@ -33,5 +34,15 @@ export class FileUploaderController {
       const result = await this.fileService.saveCdn(file);
       res.sendJson(result);
     }
+  }
+
+  @Get('/:_id')
+  public async loadAction(@PathParam('_id') _id: string, @Res() res: Express.Response) {
+    console.log(_id)
+    _id = Mongodb.ObjectID(_id);
+
+    const file: File = await this.fileService.getFileById(_id);
+    const link = this.fileService.generateFileLink(file.cdn.key);
+    res.redirect(301, link);
   }
 }

@@ -154,7 +154,7 @@ export class QiNiu {
     let downloadToken = `${this.config.ACCESS_KEY}:${encodedSign}`;
 
     const downloadUrl = `${url}&token=${downloadToken}`;
-    return downloadToken;
+    return downloadUrl;
   }
 
   /**
