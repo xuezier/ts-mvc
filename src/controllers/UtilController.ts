@@ -9,6 +9,7 @@ import { ImageCodeRedisService } from '../services';
 
 import * as Util from '../utils/util';
 import { DefinedError } from '../model/DefinedError';
+import { RsaUtil } from '../utils/rsa';
 
 @RestController('/util')
 export class UtilController {
@@ -20,26 +21,36 @@ export class UtilController {
   private codePen: CodePen;
 
   @Inject()
+  private rsaUtil: RsaUtil;
+
+  @Inject()
   private imageCodeRedis: ImageCodeRedisService;
 
   @Post('/sms')
-  public async smsAction(@BodyParam('mobile') mobile: string, @BodyParam('code') code: string, @Res() res: Express.Response) {
-    if(!code) {
+  public async smsAction(@BodyParam('mobile') mobile: string, @BodyParam('code') code: string, @BodyParam('hex') hex: string, @Res() res: Express.Response) {
+    if(!code && !hex) {
       throw new DefinedError(400, 'invalid_code');
     }
 
-    const codeBindMobile = await this.imageCodeRedis.getMobileByCode(code.toUpperCase());
-    if(codeBindMobile !== mobile) {
-      throw new DefinedError(400, 'invalid_params');
+    if (hex) {
+      const decrypt = this.rsaUtil.decryptFromHex(hex);
+
+      if (decrypt !== mobile) {
+        throw new DefinedError(400, 'invalid_hex');
+      }
+
+    } else {
+      const codeBindMobile = await this.imageCodeRedis.getMobileByCode(code.toUpperCase());
+      if(codeBindMobile !== mobile) {
+        throw new DefinedError(400, 'invalid_params');
+      }
+      await this.imageCodeRedis.delOldCode(mobile);
     }
 
     const sms: string = this.yunpianService.generateSmsCode();
-
     await this.yunpianService.bindCodeWithMobile(mobile, sms);
 
     const result = await this.yunpianService.sendSmsCode(mobile, sms);
-
-    await this.imageCodeRedis.delOldCode(mobile);
 
     res.sendJson(result);
   }
