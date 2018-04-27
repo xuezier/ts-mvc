@@ -26,6 +26,14 @@ export class UserConteoller {
     res.sendJson(user);
   }
 
+  @Put('/info') modifyInfoMiddleware(@Req() req: Express.Request, @Next() next: Express.NextFunction) {
+    const body = req.body;
+    delete body.password;
+    req.body = body;
+
+    next();
+  }
+
   @Put('/info')
   public async modifyInfoAction(@Req() req: Express.Request, @Res() res: Express.Response) {
     const body: User = req.body;

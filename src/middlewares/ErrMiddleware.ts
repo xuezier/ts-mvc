@@ -18,7 +18,7 @@ export class ErrMiddleware implements IMiddleware {
       if (description) e.description = description;
       if (!e.description) e.description = message;
 
-      e.message = e.message;
+      e.message = message;
       res.json(e);
     } else if (err instanceof DefinedError) {
       if(!err.status) err.status = 400;
