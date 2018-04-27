@@ -1,4 +1,4 @@
-import {InitializerRegistry} from "../InitializerRegistry";
+import {InitializerRegistry} from '../InitializerRegistry';
 
 export function Initialize() {
 return (target: any) => {

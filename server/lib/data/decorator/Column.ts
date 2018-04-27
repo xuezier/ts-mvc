@@ -1,4 +1,4 @@
-import {DataContainer} from "../DataContainer";
+import {DataContainer} from '../DataContainer';
 
 export function Column(columnName?: string) {
   return (target: any, propertyName: string) => {

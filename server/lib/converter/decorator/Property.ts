@@ -1,5 +1,5 @@
-import {PropertyRegistry} from "../PropertyRegistry";
-import {PropertyOptions} from "../PropertyOptions";
+import {PropertyRegistry} from '../PropertyRegistry';
+import {PropertyOptions} from '../PropertyOptions';
 
 export function Property(nameOrOptions?: string|PropertyOptions) {
 

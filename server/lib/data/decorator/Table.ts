@@ -1,4 +1,4 @@
-import {DataContainer} from "../DataContainer";
+import {DataContainer} from '../DataContainer';
 
 export function Table(tableName: string) {
   return (target: Function) => {

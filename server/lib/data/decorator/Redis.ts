@@ -6,5 +6,5 @@ export function Redis(config: IRedisConfig) {
     process.nextTick(() => {
       RedisContainer.registerClient(target, config);
     });
-  }
+  };
 }

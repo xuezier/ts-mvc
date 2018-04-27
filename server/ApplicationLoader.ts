@@ -136,11 +136,11 @@ export class ApplicationLoader {
 
   public async start(): Promise<any> {
     try {
-      await this.invokeApplicationInitHook()
-      await this.loadExternalMiddlewares()
-      await this.loadComponents()
-      await this.loadMiddlewares()
-      await this.loadRoutes()
+      await this.invokeApplicationInitHook();
+      await this.loadExternalMiddlewares();
+      await this.loadComponents();
+      await this.loadMiddlewares();
+      await this.loadRoutes();
       await this.loadErrorMiddlewares();
 
       await this.run();
@@ -181,6 +181,7 @@ export class ApplicationLoader {
 
     this.server.use(require('body-parser').json({ limit: '1gb' }));
     this.server.use(require('body-parser').urlencoded({ limit: '1gb', extended: true }));
+    this.server.use(require('connect-multiparty')());
     this.server.use(require('cookie-parser')());
     this.server.use(require('method-override')());
     this.server.use(require('serve-static')(this.publicDir));
