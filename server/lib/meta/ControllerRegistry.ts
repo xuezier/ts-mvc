@@ -119,6 +119,8 @@ export class ControllerRegistry {
     const controllerMetadata = this.getController(type);
     const handlerMetadata = HandlerRegistry.getHandler(type, actionName);
 
+    if (!path) path = '/';
+
     handlerMetadata.httpMethodAndPaths.push({
       method: httpMethod,
       path

@@ -14,7 +14,7 @@ export class FileUploaderController {
   @Inject()
   private fileService: FileService;
 
-  @Post('/')
+  @Post()
   private async uploadAction(@Req() req: Express.Request, @Res() res: Express.Response) {
     const files: {[key: string]: UploadFile} = req.files
 
