@@ -5,11 +5,12 @@ import {RestController, Get, Post, Res, Req, Inject, QueryParam, BodyParam, Next
 import {YunPianSms} from '../vendor/YunPianSms';
 import { YunPianService } from '../services/YunPianService';
 import { CodePen } from '../lib/CodePen';
-import { ImageCodeRedisService } from '../services';
+import { ImageCodeRedisService, UserService } from '../services';
 
 import * as Util from '../utils/util';
 import { DefinedError } from '../model/DefinedError';
 import { RsaUtil } from '../utils/rsa';
+import { User } from '../model';
 
 @RestController('/util')
 export class UtilController {
@@ -26,8 +27,17 @@ export class UtilController {
   @Inject()
   private imageCodeRedis: ImageCodeRedisService;
 
+  @Inject()
+  private userService: UserService;
+
   @Post('/sms')
   public async smsAction(@BodyParam('mobile') mobile: string, @BodyParam('code') code: string, @BodyParam('hex') hex: string, @Res() res: Express.Response) {
+
+    const user: User = await this.userService.findByMobile(mobile);
+    if (user) {
+      throw new DefinedError(400, 'user_exists');
+    }
+
     if(!code && !hex) {
       throw new DefinedError(400, 'invalid_code');
     }
