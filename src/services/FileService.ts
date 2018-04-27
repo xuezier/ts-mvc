@@ -39,4 +39,8 @@ export class FileService {
   public generateFileLink(key: string): string {
     return this.qiniu.generateLink(key, this.qiniu.config.TOKEN_EXPIRE);
   }
+
+  public genetateFileDownloadLink(key: string, rename: string) {
+    return this.qiniu.generateDownloadLink(key, this.qiniu.config.TOKEN_EXPIRE, rename);
+  }
 }

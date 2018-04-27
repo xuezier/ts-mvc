@@ -38,11 +38,20 @@ export class FileUploaderController {
 
   @Get('/:_id')
   public async loadAction(@PathParam('_id') _id: string, @Res() res: Express.Response) {
-    console.log(_id)
     _id = Mongodb.ObjectID(_id);
 
     const file: File = await this.fileService.getFileById(_id);
     const link = this.fileService.generateFileLink(file.cdn.key);
     res.redirect(301, link);
+  }
+
+  @Get('/download/:_id')
+  public async downloadAction(@PathParam('_id') _id: string, @Res() res: Express.Response) {
+    _id = Mongodb.ObjectID(_id);
+
+    const file: File = await this.fileService.getFileById(_id);
+    const downloadLink = this.fileService.genetateFileDownloadLink(file.cdn.key, file.name);
+
+    res.redirect(301, downloadLink);
   }
 }
