@@ -1,7 +1,7 @@
-import {FilterOptions} from "../FilterOptions";
-import {FilterRegistry} from "../FilterRegistry";
-import {ControllerRegistry} from "../ControllerRegistry";
-import {BeforeAfterFilterType} from "../enum/BeforeAfterFilterType";
+import {FilterOptions} from '../FilterOptions';
+import {FilterRegistry} from '../FilterRegistry';
+import {ControllerRegistry} from '../ControllerRegistry';
+import {BeforeAfterFilterType} from '../enum/BeforeAfterFilterType';
 
 export function Filter() {
   return (target: any) => {

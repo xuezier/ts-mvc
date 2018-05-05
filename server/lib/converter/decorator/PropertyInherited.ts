@@ -1,4 +1,4 @@
-import {PropertyRegistry} from "../PropertyRegistry";
+import {PropertyRegistry} from '../PropertyRegistry';
 
 export function PropertyInherited(inherited: Function) {
 

@@ -1,5 +1,5 @@
-import {EventEmitter} from "events";
-import {EventListenerRegistry} from "../EventListenerRegistry";
+import {EventEmitter} from 'events';
+import {EventListenerRegistry} from '../EventListenerRegistry';
 
 export function On(eventName: string, eventEmitterKlass: any) {
 

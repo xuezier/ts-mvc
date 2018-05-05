@@ -5,5 +5,5 @@ export function Collection(name?: string) {
     process.nextTick(() => {
       MongoContainer.registerCollection(target, name);
     });
-  }
+  };
 }

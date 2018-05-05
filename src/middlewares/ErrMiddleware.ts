@@ -11,26 +11,27 @@ export class ErrMiddleware implements IMiddleware {
     // console.log(err);
     const {message, status, description} = err;
 
+    let e: DefinedError;
     if (message in DefinedErrors) {
-      let e: DefinedError = DefinedErrors[message];
+      e = DefinedErrors[message];
       if (status) e.status = status;
       if (!e.status) e.status = 400;
       if (description) e.description = description;
       if (!e.description) e.description = message;
 
       e.message = message;
-      res.json(e);
     } else if (err instanceof DefinedError) {
       if(!err.status) err.status = 400;
       if(!err.description) err.description = err.message;
-      res.json(err);
+      e = err;
     } else {
-      console.error(err.stack);
-      res.json({
+      e = {
         status: 500,
         message
-      });
+      };
+      console.error(err.stack);
     }
+    res.status(e.status);
+    res.json(e);
   }
-
 }

@@ -21,7 +21,6 @@ export class GoodsTypeController {
     const body = req.body;
 
     if (parent) {
-      console.log(parent,123)
       body.parent = Mongodb.ObjectID(parent);
     }
 

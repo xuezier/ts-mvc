@@ -9,17 +9,27 @@ import {QiniuConfigModel, QiniuUploadResultModel} from './model/QiniuModel';
 @Vendor()
 export class QiNiu {
   @Inject()
-  private config: QiniuConfigModel;
+  public config: QiniuConfigModel;
 
   private qiniuClient = new Qiniu.rs.BucketManager();
 
   private util = Qiniu.util;
 
+  /**
+   * switch bucket
+   * @param BUCKET
+   * @param SERVER_URL
+   */
   public switchBucket(BUCKET: string, SERVER_URL: string) {
     this.config.BUCKET = BUCKET;
     this.config.SERVER_URL = SERVER_URL;
   }
 
+  /**
+   * re genetate a savekey
+   * @param savekey
+   * @param folder
+   */
   private _reGenerateSavekey(savekey: string, folder: string[]): string {
     if (folder) {
       savekey = `${folder.join('/')}/${savekey}`;
@@ -28,6 +38,10 @@ export class QiNiu {
     return savekey;
   }
 
+  /**
+   * generate a upload token
+   * @param key
+   */
   private _generateToken(key: string): string {
     const putPolicy: Qiniu.rs.PutPolicy = {
       scope: `${this.config.BUCKET}:${key}`,
@@ -42,6 +56,12 @@ export class QiNiu {
     return uploadToken;
   }
 
+  /**
+   * do upload file
+   * @param token
+   * @param key
+   * @param filePath
+   */
   private async _uploadFile(token: string, key: string, filePath: string) {
     const formUploader = new Qiniu.form_up.FormUploader();
 
@@ -56,6 +76,12 @@ export class QiNiu {
     });
   }
 
+  /**
+   * upload a file
+   * @param savekey
+   * @param filePath
+   * @param folder
+   */
   public async upload(savekey: string, filePath: string, folder: string[]): QiniuUploadResultModel {
     const key = this._reGenerateSavekey(savekey, folder);
 
@@ -63,10 +89,16 @@ export class QiNiu {
 
     const result: QiniuUploadResultModel = await this._uploadFile(token, key, filePath);
 
-    result.server_url = this.config.server_url;
+    result.server_url = this.config.SERVER_URL;
     return result;
   }
 
+  /**
+   * do upload a file by a file stream
+   * @param token
+   * @param key
+   * @param stream
+   */
   private async _uploadFileByStream(token: string, key: string, stream: any) {
     const formUploader = new Qiniu.form_up.FormUploader();
 
@@ -83,6 +115,12 @@ export class QiNiu {
     });
   }
 
+  /**
+   * upload file by file stream
+   * @param savekey
+   * @param stream
+   * @param folder
+   */
   public async streamUpload(savekey: string, stream: any, folder: string[]): QiniuUploadResultModel {
 
     const key = this._reGenerateSavekey(savekey, folder);
@@ -93,5 +131,61 @@ export class QiNiu {
     result.server_url = this.config.SERVER_URL;
 
     return result;
+  }
+
+  /**
+   * do generate a download link
+   * @param key
+   * @param deadTime
+   * @param rename
+   */
+  private _generateDownloadLink(key: string, deadTime: number, rename: string): string {
+    let url: string = Url.resolve(this.config.SERVER_URL, key);
+
+    if(rename) url += `?download/${encodeURIComponent(rename)}`;
+
+    if(deadTime) {
+      let e = Math.floor((+new Date) / 1000) + deadTime;
+      url += `${url.indexOf('?') > 0 ? '&' : '?'}e=${e}`;
+    }
+
+    let signature = this.util.hmacSha1(url, this.config.SECRET_KEY);
+    let encodedSign = this.util.base64ToUrlSafe(signature);
+    let downloadToken = `${this.config.ACCESS_KEY}:${encodedSign}`;
+
+    const downloadUrl = `${url}&token=${downloadToken}`;
+    return downloadUrl;
+  }
+
+  /**
+   * genetate a download link
+   * @param key
+   * @param deadTime
+   * @param rename
+   */
+  public generateDownloadLink(key: string, deadTime: number, rename: string) {
+    const downloadUrl = this._generateDownloadLink(key, deadTime, rename);
+
+    return downloadUrl;
+  }
+
+  /**
+   * generate a read link
+   * @param key
+   * @param deadTime
+   */
+  public generateLink(key: string, deadTime: number) {
+    if(arguments.length > 2) return this.generateDownloadLink.apply(this, arguments);
+
+    return this._generateDownloadLink(key, deadTime);
+  }
+
+  /**
+   * batch generate batch links
+   * @param keys
+   * @param deadTime
+   */
+  public batchGenerateLink(keys: string[], deadTime: number) {
+    return keys.map(key => this.generateLink(key, deadTime));
   }
 }
