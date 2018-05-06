@@ -10,7 +10,7 @@ export enum OauthAuthorizationCodeStatus {
 @Model()
 export class OauthAuthorizationCode {
   _id: Mongodb.ObjectID;
-  code: string;
+  authorizationCode: string;
   expiresAt: Date;
   redirectUri: string;
   scope: string;
