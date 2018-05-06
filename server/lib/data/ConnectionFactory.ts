@@ -22,7 +22,7 @@ export class ConnectionFactory {
 
       if (config.type === 'mongodb') {
         const mongoConfig: IMongoConfig = ConfigContainer.get(`database.${env}`);
-        const client: mongodb.MongoClient = await mongodb.MongoClient.connect(`mongodb://${mongoConfig.host}:${mongoConfig.port}/${mongoConfig.database}`);
+        const client: mongodb.MongoClient = await mongodb.MongoClient.connect(`mongodb://${mongoConfig.host}:${mongoConfig.port}/${mongoConfig.database}`, mongoConfig.options);
         const db: IMongoDb = client.db();
         this.connection = db;
 

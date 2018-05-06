@@ -1,6 +1,11 @@
 import * as Mongodb from 'mongodb';
 import {Collection, Model} from 'mvc';
 
+export enum OauthTokenStatus {
+  expired = 'EXPIRED',
+  active = 'ACTIVE'
+}
+
 @Collection('oauth.tokens')
 @Model()
 export class OauthToken {
@@ -12,5 +17,5 @@ export class OauthToken {
   scope: string;
   user: Mongodb.ObjectID;
   client: Mongodb.ObjectID;
-  status: string;
+  status: OauthTokenStatus;
 }

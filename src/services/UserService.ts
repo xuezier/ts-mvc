@@ -71,6 +71,10 @@ export class UserService {
     }
   }
 
+  public async findByIdWithoutPassword(_id: Mongodb.ObjectID): User {
+    return await this.user.getCollection().findOne({_id}, {password: 0});
+  }
+
   private async _modify(_id: Mongodb.ObjectID, info: User) {
     const result = await this.user.getCollection().findOneAndUpdate({_id}, {$set: info}, {
       returnOriginal: false,
