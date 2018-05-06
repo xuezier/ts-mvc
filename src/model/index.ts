@@ -3,3 +3,4 @@ export * from './OauthClient';
 export * from './OauthToken';
 export * from './SmsCode';
 export * from './file';
+export * from './goods';

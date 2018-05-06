@@ -5,9 +5,13 @@ import {Model, Collection} from 'mvc';
 
 @Collection('goods')
 @Model()
-export class Goods {
+export class GoodsModel {
   _id: Mongodb.ObjectID;
   name: string;
-  types: Mongodb.ObjectID[];
+  type: Mongodb.ObjectID;
   tags: Mongodb.ObjectID[];
+  description: Mongodb.ObjectID;
+  thumb_images: Mongodb.ObjectID[];
+  combination: Mongodb.ObjectID[];
+  stock: number;
 }

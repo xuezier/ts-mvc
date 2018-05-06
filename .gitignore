@@ -13,6 +13,7 @@ runtime/
 package-lock.json
 yarn.lock
 .env
+dump_db.sh
 
 # custom
 # src/
