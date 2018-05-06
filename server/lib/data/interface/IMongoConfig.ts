@@ -16,5 +16,5 @@ export interface IMongoConfig {
     keepAlive: boolean;
     keepAliveInitialDelay: number;
     connectTimeoutMS: number;
-  }
+  };
 }

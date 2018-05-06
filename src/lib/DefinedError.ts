@@ -14,6 +14,12 @@ export const DefinedErrors = {
   'invalid_refreshToken': {
     status: 403
   },
+  'invalid_authorizationCode': {
+    status: 403
+  },
+  'invalid_authorizationCode_expire': {
+    status: 403
+  },
   'invalid_refreshToken_expire': {
     status: 403
   },

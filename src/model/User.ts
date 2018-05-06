@@ -36,6 +36,9 @@ export class User {
   timezone: string;
   activiated: boolean;
   create_at: Date;
+  wechat: {
+    openid: string;
+  };
   last_login: {
     type: string;
     time: Date;
@@ -66,6 +69,9 @@ export const UserSchema = new SchemaObject({
   locale: String,
   timezone: String,
   activiated: Boolean,
+  wechat: new SchemaObject({
+    openid: String
+  }),
   create_at: Date,
   last_login: new SchemaObject({
     type: String,
