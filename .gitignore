@@ -1,9 +1,9 @@
 # dir
-app/src/
-app/server/
-config/
-db/
-log/
+/app/src/
+/app/server/
+/config/
+/db/
+/log/
 node_modules/
 public/
 runtime/
