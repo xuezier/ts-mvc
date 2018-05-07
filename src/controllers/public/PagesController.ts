@@ -13,4 +13,8 @@ export class PagesController {
     });
   }
 
+  @Get('/authorized')
+  public async wechatAuthorizedAction(@Res() res: Express.Response) {
+    res.render('pages/authorized');
+  }
 }

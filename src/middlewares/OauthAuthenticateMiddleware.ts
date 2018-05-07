@@ -4,6 +4,7 @@ import * as Express from 'express';
 import * as OauthServer from 'oauth2-server';
 
 @Middleware({baseUrl: '/api'})
+@Middleware({baseUrl: '/wechat/bind'})
 export class OauthAuthenticationMiddleware implements IMiddleware {
 
   @Inject()

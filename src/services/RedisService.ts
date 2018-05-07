@@ -100,13 +100,15 @@ export class OauthAccessTokenRedisService {
 
   public async setUser(user: User) {
     user._id = user._id.toHexString();
-    await this.client.hmset(`.user${user._id}`, user);
+    await this.client.set(`.user${user._id}`, JSON.stringify(user));
     user._id = Mongodb.ObjectID(user._id);
   }
 
   public async getUser(key: string) {
-    const user: User = await this.client.hmget(`.user${key}`);
-    if(!user) return null;
+    const userString: stromg = await this.client.get(`.user${key}`);
+    if(!userString) return null;
+
+    const user: User = JSON.parse(userString);
 
     user._id = Mongodb.ObjectID(user._id);
     return user;

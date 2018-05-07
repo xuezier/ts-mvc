@@ -12,6 +12,7 @@ export enum Sex {
 @Model()
 export class User {
   _id: Mongodb.ObjectID;
+  bound: Mongodb.ObjectID;
   email: string;
   email_verified: boolean;
   mobile: string;
@@ -38,6 +39,7 @@ export class User {
   create_at: Date;
   wechat: {
     openid: string;
+    unionid: string;
   };
   last_login: {
     type: string;

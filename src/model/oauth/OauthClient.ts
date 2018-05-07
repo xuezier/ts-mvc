@@ -7,5 +7,5 @@ export class OauthClient {
   _id: Mongodb.ObjectID;
   client_id: string;
   client_secret: string;
-  redirect_uri: string;
+  redirect_uri: string[];
 }

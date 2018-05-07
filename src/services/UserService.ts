@@ -71,6 +71,11 @@ export class UserService {
     }
   }
 
+  public async findUserByOpenid(openid: string) {
+    const user: User = await this.user.getCollection().findOne({wechat: {openid}});
+    return user;
+  }
+
   public async findByIdWithoutPassword(_id: Mongodb.ObjectID): User {
     return await this.user.getCollection().findOne({_id}, {password: 0});
   }
