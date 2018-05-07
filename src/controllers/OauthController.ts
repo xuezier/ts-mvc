@@ -29,12 +29,6 @@ export class OauthController {
     res.sendJson(token);
   }
 
-  @Post('/wechat/oauth')
-  public async wechatAction(@Req() req: Express.Request, @Res() res: Express.Response, @BodyParam('mobile') mobile: string) {
-    const user: User = await this.userService.findByMobile(mobile);
-
-  }
-
   @Post('/authorize')
   public async authorizeActicon(@Req() req: Express.Request, @Res() res: Express.Response) {
     const request = new OauthServer.Request(req);
