@@ -5,7 +5,7 @@
 /db/
 /log/
 node_modules/
-public/
+# /public/
 runtime/
 .vscode/
 

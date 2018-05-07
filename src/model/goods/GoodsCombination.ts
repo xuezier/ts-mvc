@@ -1,4 +1,4 @@
-import * as Mongodb from 'Mongodb';
+import * as Mongodb from 'mongodb';
 
 import {Model, Collection} from 'mvc';
 

@@ -1,5 +1,5 @@
 import * as Express from 'express';
-import * as Mongodb from 'Mongodb';
+import * as Mongodb from 'mongodb';
 
 import {RestController, Post, Get, Put, Delete, Req, Res, Data, Next, QueryParam, PathParam, Inject} from 'mvc';
 import { GoodsType } from '../../model/goods/Type';

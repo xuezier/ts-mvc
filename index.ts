@@ -2,6 +2,7 @@ import * as Cluster from 'cluster';
 import * as OS from 'os';
 // server utils path alias
 import 'module-alias/register';
+import * as Express from 'express';
 
 import * as dotenv from 'dotenv';
 // enable .env file effect in typescript
@@ -29,6 +30,10 @@ if(Cluster.isMaster) {
   });
 } else {
   const application = new Application();
+
+  application.server.use(Express.static('public'));
+  application.server.set('views', 'public');
+  application.server.set('view engine', 'pug');
 
   application.install('oauth', new OauthServer({
     model: new OauthModel(),
