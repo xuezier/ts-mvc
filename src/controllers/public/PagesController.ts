@@ -8,7 +8,8 @@ export class PagesController {
   @Get('/wechat')
   public async wechatAction(@Res() res: Express.Response) {
     res.render('pages/wechat', {
-      appid: ConfigContainer.get('vendor.wechat.appid')
+      appid: ConfigContainer.get('vendor.wechat.appid')，
+      server: ConfigContainer.get('vendor.wechat.server')
     });
   }
 
