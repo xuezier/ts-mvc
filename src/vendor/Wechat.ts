@@ -128,11 +128,11 @@ export class Wechat {
     let authorizationCode = new OauthAuthorizationCode();
     authorizationCode.authorizationCode = code;
     authorizationCode.user = user._id;
-
-    const client: OauthClient = await this.oauthClient.getCollection().findOne({client: this.config.oauth_client});
+    const client: OauthClient = await this.oauthClient.getCollection().findOne({client_id: this.config.oauth_client});
 
     authorizationCode.client = client._id;
-    authorizationCode.redirectUri = client.redirect_uri[0];
+    console.log(client)
+    authorizationCode.redirectUri = client.redirectUris[0];
 
     authorizationCode.scope = 'read';
     authorizationCode.status = OauthAuthorizationCodeStatus.active;

@@ -14,7 +14,7 @@ export class ErrMiddleware implements IMiddleware {
     let e: DefinedError;
     if (message in DefinedErrors) {
       e = DefinedErrors[message];
-      if (status) e.status = status;
+      if (!e.status) e.status = status;
       if (!e.status) e.status = 400;
       if (description) e.description = description;
       if (!e.description) e.description = message;

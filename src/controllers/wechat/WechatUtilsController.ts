@@ -36,20 +36,28 @@ export class WechatUtilsController {
     const token = await this.wechat.getAccessTokenByCode(code);
     const existsUser: User = await this.userService.findUserByOpenid(token.openid);
 
-    const statedata: {redirect_url: string} = QueryString.parse(state);
-    const redirect_url = statedata.redirect_url;
-    if (existsUser) {
-      await this.wechat.createAuthorizationCode(code, existsUser);
-      redirect_url += '?code=' + code;
+    let statedata: {redirect_url: string} = {};
+
+    let stateArray = state.split('|');
+
+    for(let i = 0; i < (stateArray.length / 2); i++) {
+      let index = i * 2;
+      statedata[stateArray[index]] = stateArray[index+1];
     }
 
+    // const statedata: {redirect_url: string} = QueryString.parse(state.replace(/\|/g, '='));
+    let redirect_url = statedata.redirect_url;
+    if (existsUser) {
+      await this.wechat.createAuthorizationCode(code, existsUser);
+    }
+
+    redirect_url += '?code=' + code;
     res.redirect(redirect_url);
   }
 
   @Post('/bind')
   public async bindWechatAction(@BodyParam('code') code: string, @Req() req: Express.Request, @Res() res: Express.Request) {
-    const user: User = req.user;
-
+    let user: User = req.user;
     const token = await this.wechat.findAccessTokenByCode(code);
 
     if(!token) {
