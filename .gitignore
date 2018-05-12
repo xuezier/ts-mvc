@@ -1,12 +1,12 @@
 # dir
 /app/src/
 /app/server/
-/config/
-/db/
-/log/
+/config/*.json
+/db/*/
+/log/*.log
 node_modules/
 # /public/
-runtime/
+runtime/*.pem
 .vscode/
 
 # file
