@@ -270,5 +270,5 @@ export class SmsRedisService {
 ```
 
 
-[npm-image]: https://img.shields.io/npm/v/io-grpc.svg?style=flat-square
-[npm-url]: https://www.npmjs.com/package/io-grpc
+[npm-image]: https://img.shields.io/npm/v/mvc-ts.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/mvc-ts

@@ -9,6 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "homepage": "https://github.com/xuezier/ts-mvc",
   "author": "xuezi",
   "license": "ISC",
   "dependencies": {
