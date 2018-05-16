@@ -1,0 +1,36 @@
+{
+  "name": "mvc-ts",
+  "version": "1.0.7",
+  "description": "",
+  "main": "app/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xuezi",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cli-table": "^0.3.1",
+    "connect-multiparty": "^2.1.0",
+    "cookie-parser": "^1.4.3",
+    "cuid": "^2.1.1",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "knex": "^0.14.6",
+    "lodash": "^4.17.5",
+    "method-override": "^2.3.10",
+    "mime": "^2.3.1",
+    "mongodb": "^3.0.7",
+    "morgan": "^1.9.0",
+    "redis-promised": "^0.9.2",
+    "reflect-metadata": "^0.1.12",
+    "request": "^2.85.0",
+    "require-all": "^2.2.0",
+    "schema-object": "^4.0.11",
+    "uuid": "^3.2.1",
+    "winston": "^2.4.1"
+  }
+}
