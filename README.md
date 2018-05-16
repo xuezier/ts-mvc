@@ -1,4 +1,5 @@
 mvc-ts is a mvc framework bult from express module.
+[![NPM version][npm-image]][npm-url]
 
 # Installation
 ```bash
@@ -59,7 +60,7 @@ export class OauthAuthenticationMiddleware extends IMiddleware {
         @Req() req: Express.Request,
         @Res() res: Express.Response,
         @Next() next: Express.NextFunction) {
-        
+
         const request = new OauthServer.Request(req);
         const response = new OauthServer.Response(res);
 
@@ -148,9 +149,9 @@ file my.ts
 ```javascript
 import {ConfigContainer} from 'mvc-ts';
 
-console.log(ConfigContainer.get('utils.client.mvc')); 
+console.log(ConfigContainer.get('utils.client.mvc'));
 // log: mvc
-console.log(ConfigContainer.get('utils.client.authorization_code')); 
+console.log(ConfigContainer.get('utils.client.authorization_code'));
 // log: authorization_code
 console.log(ConfigContainer.get('vendor.yunpian.apikey'));
 // log: 7b04928caf221bf56e*********
@@ -267,3 +268,7 @@ export class SmsRedisService {
     }
 }
 ```
+
+
+[npm-image]: https://img.shields.io/npm/v/io-grpc.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/io-grpc
