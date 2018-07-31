@@ -4,23 +4,23 @@ import * as Path from 'path';
 import * as Express from 'express';
 import * as cuid from 'cuid';
 
-import {ApplicationRegistry} from './ApplicationRegistry';
-import {ApplicationContainer} from './ApplicationContainer';
+import { ApplicationRegistry } from './ApplicationRegistry';
+import { ApplicationContainer } from './ApplicationContainer';
 
-import {ControllerRegistry} from './lib/meta/ControllerRegistry';
-import {HandlerTransformer} from './lib/meta/HandlerTransformer';
-import {ControllerTransformer} from './lib/meta/ControllerTransformer';
-import {MiddlewareRegistry} from './lib/meta/MiddlewareRegistry';
-import {DependencyRegistry} from './lib/di/DependencyRegistry';
-import {InitializerRegistry} from './lib/initializer/InitializerRegistry';
-import {Klass} from './lib/core/Klass';
-import {Request} from './lib/meta/interface/Request';
-import {RouterLogger} from './lib/util/RouterLogger';
+import { ControllerRegistry } from './lib/meta/ControllerRegistry';
+import { HandlerTransformer } from './lib/meta/HandlerTransformer';
+import { ControllerTransformer } from './lib/meta/ControllerTransformer';
+import { MiddlewareRegistry } from './lib/meta/MiddlewareRegistry';
+import { DependencyRegistry } from './lib/di/DependencyRegistry';
+import { InitializerRegistry } from './lib/initializer/InitializerRegistry';
+import { Klass } from './lib/core/Klass';
+import { Request } from './lib/meta/interface/Request';
+import { RouterLogger } from './lib/util/RouterLogger';
 
-import {ConnectionFactory} from './lib/data/ConnectionFactory';
-import {LogFactory} from './lib/logger/LogFactory';
+import { ConnectionFactory } from './lib/data/ConnectionFactory';
+import { LogFactory } from './lib/logger/LogFactory';
 
-import {ConfigContainer} from './lib/config/ConfigContainer';
+import { ConfigContainer } from './lib/config/ConfigContainer';
 
 export class ApplicationLoader {
   private _server: Express.Application;
@@ -42,12 +42,12 @@ export class ApplicationLoader {
   private _port: string | number;
 
   // TODO: add routes group support
-  private _routes: {[key: string]: string};
+  private _routes: { [key: string]: string };
 
   // TODO: add external components support
   private _components: string[];
 
-  get server(){
+  get server() {
     return this._server;
   }
 
@@ -79,7 +79,7 @@ export class ApplicationLoader {
     return this._dbDir;
   }
 
-  get port(): string {
+  get port(): string | number {
     return this._port;
   }
 
@@ -134,7 +134,11 @@ export class ApplicationLoader {
     });
   }
 
-  public async start(): Promise<any> {
+  public async start(port?: number | string): Promise<any> {
+    if (port) {
+      this._port = port;
+    }
+
     try {
       await this.invokeApplicationInitHook();
       await this.loadExternalMiddlewares();
@@ -166,7 +170,7 @@ export class ApplicationLoader {
   }
 
   private async invokeApplicationInitHook() {
-    '$onInit' in this ? (<any> this).$onInit() : null;
+    '$onInit' in this ? (<any>this).$onInit() : null;
     return this;
   }
 
@@ -192,9 +196,9 @@ export class ApplicationLoader {
   private async loadComponents() {
 
     require('require-all')({
-      dirname     :  this.srcDir,
-      excludeDirs :  new RegExp(`^\.(git|svn|node_modules|${this.configDir}|${this.logDir}})$`),
-      recursive   : true
+      dirname: this.srcDir,
+      excludeDirs: new RegExp(`^\.(git|svn|node_modules|${this.configDir}|${this.logDir}})$`),
+      recursive: true
     });
 
     return this;
@@ -203,7 +207,7 @@ export class ApplicationLoader {
   private async loadMiddlewares() {
 
     MiddlewareRegistry
-      .getMiddlewares({isErrorMiddleware: false})
+      .getMiddlewares({ isErrorMiddleware: false })
       .forEach(middlewareMetadata => {
         const handlerMetadata = middlewareMetadata.handler;
         const transformer = new HandlerTransformer(handlerMetadata);
@@ -226,7 +230,7 @@ export class ApplicationLoader {
   private async loadErrorMiddlewares() {
 
     MiddlewareRegistry
-      .getMiddlewares({isErrorMiddleware: true})
+      .getMiddlewares({ isErrorMiddleware: true })
       .forEach(middlewareMetadata => {
         const handlerMetadata = middlewareMetadata.handler;
         const transformer = new HandlerTransformer(handlerMetadata);

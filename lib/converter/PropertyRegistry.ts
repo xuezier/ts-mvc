@@ -10,7 +10,7 @@ export class PropertyRegistry {
   public static properties: Map<Function, PropertyMetadata[]> = new Map();
 
 
-  public static registerObjectProperty(type: Function, klassProperty: string, nameOrOptions?: string|PropertyOptions) {
+  public static registerObjectProperty(type: Function, klassProperty: string, nameOrOptions?: string) {
     const properties = this.findProperties(type);
 
     const propertyType = Reflection.getType(type.prototype, klassProperty);
