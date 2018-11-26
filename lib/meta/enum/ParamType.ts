@@ -12,4 +12,4 @@ export enum ParamType {
   Error,
 
   Data
-};
+}

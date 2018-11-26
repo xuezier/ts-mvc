@@ -6,7 +6,6 @@ export class ConfigContainer {
   private static configFiles: string[] = [];
   private static config: any;
 
-
   public static registerConfig(path: string) {
     this.configFiles.push(path);
 

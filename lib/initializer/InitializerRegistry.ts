@@ -9,7 +9,7 @@ export class InitializerRegistry {
   public static initializers = InitializerRegistry._initializers;
 
   public static registerInitializer(type: Function) {
-    DependencyRegistry.registerComponent(<Klass>type);
+    DependencyRegistry.registerComponent(type as Klass);
     this.getInitializer(type);
   }
 

@@ -12,7 +12,7 @@ export class MiddlewareRegistry {
 
   public static registerMiddleware(type: Function, isErrorMiddleware: boolean, options?: MiddlewareOptions) {
 
-    DependencyRegistry.registerComponent(<Klass>type);
+    DependencyRegistry.registerComponent(type as Klass);
     const middlewareMetadata = this.getMiddleware(type);
     middlewareMetadata.init(options);
     middlewareMetadata.isErrorMiddleware = isErrorMiddleware;

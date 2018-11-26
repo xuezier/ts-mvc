@@ -27,7 +27,6 @@ export class ConverterService {
       }
     }
 
-
     if (returnType === String) {
       return '' + data;
     }
@@ -48,14 +47,14 @@ export class ConverterService {
     }
 
     if (returnType === Array && type === Array && options && options.baseType) {
-      return data.map(item => this.convert(item, <Function> options.baseType));
+      return data.map(item => this.convert(item, options.baseType as Function));
     }
 
     if (returnType === Map && type === Map && options && options.baseType) {
       const result = new Map();
 
       data.forEach((value, key) => {
-        result.set(key, this.convert(value, <Function> options.baseType));
+        result.set(key, this.convert(value, options.baseType as Function));
       });
 
       return result;
@@ -80,7 +79,7 @@ export class ConverterService {
         let objectProperty = metadata.objectProperty;
 
         if (options && options.prefix) {
-          objectProperty = <string> options.prefix + objectProperty;
+          objectProperty = options.prefix as string + objectProperty;
         }
 
         let value;
@@ -125,7 +124,7 @@ export class ConverterService {
     properties = PropertyRegistry.properties.get(returnType);
     if (type === Object && !TypeUtil.isSimpleType(returnType) && properties) {
 
-      const klass = <Klass> returnType;
+      const klass = returnType as Klass;
       const ins = new klass();
 
       properties.forEach((metadata: PropertyMetadata) => {
@@ -135,7 +134,7 @@ export class ConverterService {
         let objectProperty = metadata.objectProperty;
 
         if (options && options.prefix) {
-          objectProperty = <string> options.prefix + objectProperty;
+          objectProperty = options.prefix as string + objectProperty;
         }
 
         let value;
@@ -167,7 +166,7 @@ export class ConverterService {
     properties = PropertyRegistry.properties.get(type);
     if (!TypeUtil.isSimpleType(type) && !TypeUtil.isSimpleType(returnType) && properties && returnProperties) {
 
-      const klass = <Klass> returnType;
+      const klass = returnType as Klass;
 
       const ins = new klass();
 

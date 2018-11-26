@@ -29,7 +29,7 @@ export class ControllerTransformer {
 
       const actions = _.concat([],
         beforeFilters,
-        <any>handler,
+        handler as any,
         afterFilters);
 
       handlerMetadata.httpMethodAndPaths.forEach(httpMethodAndPath => {
@@ -50,7 +50,6 @@ export class ControllerTransformer {
   }
 
   private getFiltersForAction(actionName: string) {
-
 
     return ['beforeFilters', 'afterFilters'].map(key => {
       const store: any[] = [];

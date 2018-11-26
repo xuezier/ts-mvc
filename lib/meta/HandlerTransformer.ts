@@ -10,7 +10,6 @@ import {NextFunction} from './interface/NextFunction';
 import {Request} from './interface/Request';
 import {Response} from './interface/Response';
 
-
 /**
  * Transform a handler to a express handler
  *
@@ -165,8 +164,7 @@ export class HandlerTransformer {
 
     });
 
-
-    const handlerKlass = <Klass>this.handlerMetadata.type;
+    const handlerKlass = this.handlerMetadata.type as Klass;
 
     const handlerInstance = DependencyRegistry.get(handlerKlass);
 

@@ -4,12 +4,12 @@ import {DIException} from './error/DIException';
 
 export class DIContainer {
 
-  private static instances: { name: string|undefined, type: Function|undefined, instance: any }[] = [];
+  private static instances: { name: string | undefined, type: Function | undefined, instance: any }[] = [];
   private static components: Component[] = [];
   private static paramHandlers: ParamHandler[] = [];
   private static propertyHandlers: PropertyHandler[] = [];
 
-  public static registerComponent(name: string|undefined, type: Function, params: any) {
+  public static registerComponent(name: string | undefined, type: Function, params: any) {
     this.components.push({
       name,
       type,
@@ -56,7 +56,7 @@ export class DIContainer {
   //     this.instances = [];
   //     this.components = [];
   // }
-  public static get(nameOrType: string|Function): any {
+  public static get(nameOrType: string | Function): any {
 
     let instance = this.findInstanceByNameOrType(nameOrType);
 
@@ -69,7 +69,6 @@ export class DIContainer {
     const name = component.name;
     const type = component.type;
     let params  = component.params;
-
 
     if (params) {
       params = this.initParams(type, params);
@@ -124,7 +123,7 @@ export class DIContainer {
     }
   }
 
-  private static findInstanceByNameOrType(nameOrType: string|Function) {
+  private static findInstanceByNameOrType(nameOrType: string | Function) {
     if (typeof nameOrType === 'string') {
       return this.findInstanceByName(nameOrType);
     } else {
@@ -150,7 +149,7 @@ export class DIContainer {
     }
   }
 
-  private static findComponentByNameOrType(nameOrType: string|Function) {
+  private static findComponentByNameOrType(nameOrType: string | Function) {
     if (typeof nameOrType === 'string') {
       return this.findComponentByName(nameOrType);
     } else {

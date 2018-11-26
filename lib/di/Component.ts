@@ -1,5 +1,5 @@
 export interface Component {
-  name: string|undefined;
+  name: string | undefined;
   type: Function;
   params: any[];
 }

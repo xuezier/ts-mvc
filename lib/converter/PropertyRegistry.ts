@@ -9,7 +9,6 @@ export class PropertyRegistry {
 
   public static properties: Map<Function, PropertyMetadata[]> = new Map();
 
-
   public static registerObjectProperty(type: Function, klassProperty: string, nameOrOptions?: string) {
     const properties = this.findProperties(type);
 
@@ -29,14 +28,14 @@ export class PropertyRegistry {
 
       } else {
 
-        const options = <PropertyOptions> nameOrOptions;
+        const options = nameOrOptions as PropertyOptions;
 
         if (typeof options.name !== 'undefined') {
           objectProperty = options.name;
         }
 
         if (typeof options.converter !== 'undefined') {
-          converter = DependencyRegistry.get(<Klass> options.converter);
+          converter = DependencyRegistry.get(options.converter as Klass);
         }
 
         if (typeof options.baseType !== 'undefined') {

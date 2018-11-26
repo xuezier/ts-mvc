@@ -153,13 +153,12 @@ export class ApplicationLoader {
     }
   }
 
-
   private async init() {
 
     InitializerRegistry
       .getInitializers()
       .forEach(initializer => {
-        const instance = DependencyRegistry.get(<Klass>initializer.type);
+        const instance = DependencyRegistry.get(initializer.type as Klass);
         instance['init'].apply(instance);
       });
 
@@ -170,7 +169,7 @@ export class ApplicationLoader {
   }
 
   private async invokeApplicationInitHook() {
-    '$onInit' in this ? (<any>this).$onInit() : null;
+    '$onInit' in this ? (this as any).$onInit() : null;
     return this;
   }
 

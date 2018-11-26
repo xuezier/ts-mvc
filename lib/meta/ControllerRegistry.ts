@@ -40,7 +40,6 @@ export class ControllerRegistry {
     return result;
   }
 
-
   /**
    * used to register a class as a Controller or RestController
    *
@@ -70,15 +69,14 @@ export class ControllerRegistry {
    * @param baseUrl
    * @param isRest
    */
-  public static registerController(type: Function, baseUrl: string|RegExp, isRest: boolean) {
+  public static registerController(type: Function, baseUrl: string | RegExp, isRest: boolean) {
 
-    DependencyRegistry.registerComponent(<Klass>type);
+    DependencyRegistry.registerComponent(type as Klass);
 
     const controllerMetadata = this.getController(type);
     controllerMetadata.baseUrl = baseUrl;
     controllerMetadata.isRest = isRest;
   }
-
 
   /**
    * used to register a controller action, an action used to handle http request
@@ -114,7 +112,7 @@ export class ControllerRegistry {
    * @param httpMethod
    * @param path
    */
-  public static registerAction(type: Function, actionName: string, httpMethod: string, path: string|RegExp) {
+  public static registerAction(type: Function, actionName: string, httpMethod: string, path: string | RegExp) {
 
     const controllerMetadata = this.getController(type);
     const handlerMetadata = HandlerRegistry.getHandler(type, actionName);
@@ -128,7 +126,6 @@ export class ControllerRegistry {
 
     controllerMetadata.handlers.set(actionName, handlerMetadata);
   }
-
 
   public static registerFilter(controllerType: Function,
     filterType: Function,
@@ -150,7 +147,6 @@ export class ControllerRegistry {
         throw new Error('not valid arguments');
     }
   }
-
 
   /**
    * safe get controller

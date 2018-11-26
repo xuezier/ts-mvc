@@ -7,7 +7,7 @@ export class ApplicationRegistry {
   public static settings: SettingOptions;
 
   public static registerWithOptions(target: Function, options: SettingOptions) {
-    DependencyRegistry.registerComponent(<Klass>target);
+    DependencyRegistry.registerComponent(target as Klass);
     this.settings = options;
   }
 }

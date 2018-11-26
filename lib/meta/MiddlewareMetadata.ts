@@ -9,7 +9,7 @@ export class MiddlewareMetadata {
 
   private _order: number;
 
-  private _baseUrl: string|RegExp;
+  private _baseUrl: string | RegExp;
 
   private _isErrorMiddleware: boolean;
 
@@ -21,7 +21,7 @@ export class MiddlewareMetadata {
     return this._order;
   }
 
-  get baseUrl(): string|RegExp {
+  get baseUrl(): string | RegExp {
     return this._baseUrl;
   }
 
@@ -45,7 +45,6 @@ export class MiddlewareMetadata {
 
     this._handler = handler;
   }
-
 
   constructor(type: Function, options?: MiddlewareOptions) {
 

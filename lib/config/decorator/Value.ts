@@ -9,7 +9,7 @@ export function Value(expression: string) {
 
     if (typeof index !== 'undefined') {
 
-      const params = (<any> Reflect).getMetadata('design:paramtypes', target, key);
+      const params = (Reflect as any).getMetadata('design:paramtypes', target, key);
       const type = params[index];
 
       DIContainer.registerParamHandler({
@@ -20,7 +20,7 @@ export function Value(expression: string) {
 
     } else {
 
-      const type = (<any> Reflect).getMetadata('design:type', target, key);
+      const type = (Reflect as any).getMetadata('design:type', target, key);
 
       DIContainer.registerPropertyHandler({
         type: target.constructor,

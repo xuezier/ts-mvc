@@ -11,7 +11,7 @@ export class FilterRegistry {
 
   public static registerFilter(type: Function) {
 
-    DependencyRegistry.registerComponent(<Klass>type);
+    DependencyRegistry.registerComponent(type as Klass);
     const filterMetadata = this.getFilter(type);
 
     const handlerMetadata = HandlerRegistry.getHandler(type, 'use');

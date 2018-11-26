@@ -20,7 +20,6 @@ export function Config(fileNameOrPath: string) {
     path = Path.resolve(process.cwd(), 'config', fileNameOrPath);
   }
 
-
   return (target: Function) => {
 
     if (Path.extname(fileNameOrPath) !== '.json') {

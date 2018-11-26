@@ -37,7 +37,6 @@ export class LogFactory {
 
     const fileTransports: Winston.TransportInstance = new (Winston.transports.File)(fileLogOptions);
 
-
     this.logger = new (Winston.Logger)({
       level: defaultLogLevel,
       transports: [consoleTransport, fileTransports]
